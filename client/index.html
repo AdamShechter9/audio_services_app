@@ -13,6 +13,7 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
+
   <!-- NAVIGATION BAR -->
   <nav class="blue-grey darken-1" id="top-nav" role="navigation">
     <div class="nav-wrapper container">
@@ -36,10 +37,10 @@
         <div class="divider"></div>
         <li><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li>
       </ul>
-
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
+
 <!-- LOGIN MODAL -->
   <div id="modal1" class="modal">
     <div class="modal-content">
@@ -108,6 +109,7 @@
       </form>
     </div>
   </div>
+
   <!-- JUMBOTRON SECTION -->
   <div id="index-banner" class="parallax-container">
     <div class="section">
@@ -127,20 +129,14 @@
 
   <div class="container">
     <div class="section">
-        <!-- Modal Trigger -->
-        <!-- Modal Structure -->
-
-      <!--   Icon Section   -->
       <div class="row">
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center purple-text"><i class="material-icons">volume_up</i></h2>
             <h5 class="center">Amazing Sound</h5>
-
             <p class="light">We guarantee you amazing hi-def sound quality.  Attention to sonic details and a case-by-case study of frequency curve and dynamic is executed.</p>
           </div>
         </div>
-
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center purple-text"><i class="material-icons">schedule</i></h2>
@@ -149,21 +145,16 @@
             <p class="light">We are dedicated to meeting your deadlines and self-prioritize according to clients' needs.  We do our best to be fast and accurate, without making a sacrifice with quality.</p>
           </div>
         </div>
-
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center purple-text"><i class="fa fa-money" aria-hidden="true"></i></h2>
             <h5 class="center">Affordable</h5>
-
             <p class="light">As fellow musicians, we know what it's like to be on a budget, and how hard it is to survive in the industry.  We do our best to make our services affordable, and will offer bulk rate for Albums and labels.</p>
           </div>
         </div>
       </div>
-
     </div>
   </div>
-
-
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
       <div class="container">
@@ -174,10 +165,8 @@
     </div>
     <div class="parallax"><img src="./img/edm-show.jpg" alt="Unsplashed background img 2"></div>
   </div>
-
   <div class="container">
     <div class="section">
-
       <div class="row">
         <div class="col s12 center">
           <h3><i class="mdi-content-send brown-text"></i></h3>
@@ -186,11 +175,8 @@
           Finally, our engineer takes another critical listen and see if anything needs a readjustment, before it is being uploaded and a link is sent. </p>
         </div>
       </div>
-
     </div>
   </div>
-
-
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
       <div class="container">
@@ -201,13 +187,23 @@
     </div>
     <div class="parallax"><img src="./img/recordingstudio.jpg" alt="Unsplashed background img 3"></div>
   </div>
-  
   <div class="container">
     <div class="section">
       <div class="row">
         <div class="col-s12 left">
-          <h4>What Clients Say</h4>
-          <p class="light">Pumpkin: <i>Dude! This song sounds so good! Thank you!!! </i><br>Scour Records: <i>comes highly recommended by us!</i> <br>Willdabeast: <i>This message is HIGHLY endorsed. Adam absolutely KILLS the audio game. Seriously, I am thankful for his efforts on our album.. He went above and beyond. Some of the best services out there at reasonable rates. </i><br>Darcy Rank:<i> My EP was mastered by this legend, can vouch that he is a good man and a better mastering engineer!</i> <br>Father Funk: <i>Father Funk approved! Spark Arrester: Top work by a top fella!</i> <br>EVeryman:<i> Yes! Adam is a beast! Good work man! I highly recommend this man's mixing and mastering!</i> <br>Brian Zerega: <i>The best of the best!</i></p>
+          <!-- <h3 class="header center-align">What Clients Say</h3> -->
+          <ul id="quotes-list-stagger">
+            <li><h6 class="grey-text"><i>Dude! This song sounds so good! Thank you!!!</i></h6>-Pumpkin</li>
+            <li><h6 class="grey-text"><i>comes highly recommended by us!</i></h6>-Scour Records</li>
+            <li><h6 class="grey-text"><i>This message is HIGHLY endorsed. Adam absolutely KILLS the audio game. Seriously, I am thankful for his efforts on our album.. He went above and beyond.</i></h6>-Willdabeast</li>
+            <li><h6 class="grey-text"><i> My EP was mastered by this legend, can vouch that he is a good man and a better mastering engineer!</i></h6>-Darcy Rank</li>
+          </ul>
+          <ul id="quotes-list-stagger2">
+            <li><h6 class="grey-text"><i>Father Funk approved!</i></h6>-Father Funk</li>
+            <li><h6 class="grey-text"><i>Top work by a top fella!</i></h6>-Spark Arrester</li>
+            <li><h6 class="grey-text"><i> Yes! Adam is a beast! Good work man! I highly recommend this man's mixing and mastering!</i></h6>-EVeryman</li>
+            <li><h6 class="grey-text"><i>The best of the best!</i></h6>-Brian Zerega</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -216,23 +212,15 @@
 
 
   <footer class="page-footer blue-grey darken-1">
-    <div class="container">
-      <div class="row">
-        <div class="col s12 l4">
-<!--           <ul>
-            <li><a class="white-text" href="#!">Facebook</a></li>
-            <li><a class="white-text" href="#!">Soundcloud</a></li>
-            <li><a class="white-text" href="#!">Twitter</a></li>
-            <li><a class="white-text" href="#!">Google+</a></li>
-          </ul> -->
-          
-        </div>
+      <div class="container">
+          <h6 class="header white-text center-align no-pad-bot">Website design by ChromaWave Design LLC</h6>
       </div>
-    </div>
     <div class="footer-copyright blue-grey darken-1">
       <div class="container">
-      <span>Copyright  &copy 2016</span>&nbsp|&nbsp
-      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a> | <span>Website design by ChromaWave Design LLC</span>
+        <div class="row">
+          <span class="">Copyright  &copy 2016</span>&nbsp|&nbsp
+          <span class=""> Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a></span>
+        </div>
       </div>
     </div>
   </footer>

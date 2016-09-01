@@ -38,6 +38,14 @@ p {
 #jumboheader2 {
   text-shadow: 2px 5px 7px gray; }
 
+#quotes-list-stagger li {
+  opacity: 0;
+  margin-bottom: 2.5em; }
+
+#quotes-list-stagger2 li {
+  opacity: 0;
+  margin-bottom: 2.5em; }
+
 .button-collapse {
   color: #26a69a; }
 
