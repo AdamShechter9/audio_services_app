@@ -19,8 +19,24 @@ nav .brand-logo {
   color: #444;
 }
 
+body {
+  background-color: #cfd8dc;
+}
+
 p {
   line-height: 2rem;
+}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease-in;
+  -moz-transition: opacity 0.25s ease-in;
+  -o-transition: opacity 0.25s ease-in;
+  -ms-transition: opacity 0.25s ease-in;
+  transition: opacity 0.25s ease-in;
+}
+.fade.in{
+  opacity: 1;
 }
 
 #top-nav {  
@@ -52,6 +68,18 @@ p {
         color: #ab47bc;
       }
     }
+  }
+}
+
+#inbox_space {
+  width: 100%;
+  height: 500px;
+  background-color: #e8eaf6;
+  border-radius: 3em;
+  padding: 3em 3em;
+
+  #messagetable {
+    line-height: 1.2;
   }
 }
 
