@@ -7,6 +7,7 @@ var MessageSchema = new mongoose.Schema({
 	text: {type: String, minlength: 3, required: true},
 	read: {type: Boolean, default: false},
 	title: {type: String},
+	// Saving the userid everytime, whether it's a reply or a new message.
 	userid: {type: String, required: true}
 }, {timestamps: true});
 

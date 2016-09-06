@@ -14,6 +14,7 @@ var ADMIN = "warp9mixmaster@gmail.com";
 
 // -----------------------------------------------------------------
 // FACTORIES
+// userFactory
 TopApp.factory('userFactory', function ($http) {
 	var factory = {};
 	var sessionuser = {};
@@ -77,9 +78,34 @@ TopApp.factory('userFactory', function ($http) {
 	return factory;
 });
 
-TopApp.factory('messageFactory', function () {
+// messageFactory
+TopApp.factory('messageFactory', function ($http) {
 	var factory = {};
-	var messages = [];
+	var messages = {};
+
+	factory.getMessages = function (callback) {
+		//console.log("messageFactory->getMessages");
+		$http.get('/messages').then(function(data) {
+			//console.log("getMessages response", data.data);
+			if (data.data.hasOwnProperty('error')) {
+				callback(data.data);
+			} else {
+				messages = data.data.messages;
+				callback(messages);
+			}
+		})
+	}
+
+	factory.createMessage = function (message, callback) {
+		console.log("messageFactory->createMessage", message);
+		$http.post('/messages/send', message).then(function(data) {
+			if (data.data.hasOwnProperty('error')) {
+				callback(data.data);
+			} else {
+				callback();
+			}
+		})
+	}
 
 	return factory;
 })
@@ -184,7 +210,9 @@ TopApp.controller('uploadFileController', function ($scope, $location, userFacto
 	});
 })
 
-TopApp.controller('messageController', function ($scope, userFactory) {
+TopApp.controller('messageController', function ($scope, userFactory, messageFactory) {
+	var messages = [];
+
 	console.log("messageController");
 
 	$scope.sessionProgress = false;
@@ -200,9 +228,45 @@ TopApp.controller('messageController', function ($scope, userFactory) {
 		}
 		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
 	});
+
+	function getInboxMessages () {
+		messageFactory.getMessages(function (data) {
+			if (!(data.hasOwnProperty('error'))) {
+				console.log("getInboxMessages->data", data);
+				messages = data.messages;
+			}
+		})
+	}
+
+	$scope.newMessage = function () {
+		if ($scope.title != undefined && $scope.title != "") {
+			if ($scope.new_text != undefined && $scope.new_text != "") {
+				if ($scope.new_text.length > 3) {
+					var newMessage = {};
+					newMessage.title = $scope.title;
+					newMessage.text = $scope.new_text;
+					//console.log(newMessage);
+					messageFactory.createMessage(newMessage, function (){
+						getInboxMessages();
+					})
+				} else {
+					Materialize.toast('Message needs to be longer', 6000);
+				}
+			} else {
+				Materialize.toast('Missing Body Text', 6000);
+			}
+			
+		} else {
+			Materialize.toast('Missing Title', 6000);
+		}
+		
+	}
+
 	$scope.messageReply = function () {
 		//$('#messageReplyModal').mo
 	}
+
+	getInboxMessages();
 })
 
 TopApp.controller('settingsController', function ($scope, userFactory) {

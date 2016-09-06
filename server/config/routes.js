@@ -64,7 +64,7 @@ module.exports = function (app) {
 	app.post('/messages/send', function (req, res) {
 		// send a new message and store in database
 		console.log("sending message for user", req.session.userid);
-		MessagesController.getMessages(req, res);
+		MessagesController.createMessage(req, res);
 	})
 	app.post('/messages/upload', function (req, res) {
 		// upload a file 

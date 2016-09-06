@@ -123,18 +123,17 @@
   <div id="messageNewModal" class="modal" >
     <div class="modal-content">
         <ul>
-          <li>From: Adam Shechter</li>
+          <li>From: {{ currentSession.name }}</li>
           <li>To: Warp9Audio</li>
-          <li>Date: Sept 2nd, 2016</li>
         </ul>
         <div class="section">
           <form>
             <div class="input-field col s12">
-              <input id="title" type="text" name="title" class="validate">
+              <input id="title" type="text" ng-model="title" class="validate">
               <label for="title">Subject</label>
             </div>
               <div class="input-field col s12">
-                <textarea id="reply_text" class="materialize-textarea" name="reply_text" minlength="5" class="validate"></textarea>
+                <textarea id="new_text" class="materialize-textarea" ng-model="new_text" minlength="5" class="validate"></textarea>
                 <label for="textarea1">Message</label>
               </div>
           </form>
@@ -142,7 +141,7 @@
         <br>
         <div class="row">
           <div class="col sm6">
-            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Send&nbsp&nbsp<i class="material-icons" style="font-size: 1em;vertical-align: top;" aria-hidden="true">mode_edit</i>
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" ng-click="newMessage()">Send&nbsp&nbsp<i class="material-icons" style="font-size: 1em;vertical-align: top;" aria-hidden="true">mode_edit</i>
             </button>
           </div>
           <div class="col sm6 right">
