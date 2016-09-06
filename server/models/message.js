@@ -6,6 +6,7 @@ var MessageSchema = new mongoose.Schema({
 	email: {type: String, minlength: 3, required: true},
 	text: {type: String, minlength: 3, required: true},
 	read: {type: Boolean, default: false},
+	title: {type: String}
 	userid: {type: String, required: true}
 }, {timestamps: true});
 
