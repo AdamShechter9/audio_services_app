@@ -4,6 +4,7 @@
 
 var TopApp = angular.module('TopApp', ['ui.materialize']);
 
+var ADMIN = "warp9mixmaster@gmail.com";
 
 
 // -----------------------------------------------------------------
@@ -151,6 +152,7 @@ TopApp.controller('loginController', function ($scope, userFactory, $location) {
 
 TopApp.controller('navbarController', function ($scope, userFactory) {
 	$scope.sessionProgress = false;
+
 	userFactory.inSession(function (response) {
 		$scope.currentSession = response;
 		if ($scope.currentSession.name != undefined) {
@@ -161,18 +163,48 @@ TopApp.controller('navbarController', function ($scope, userFactory) {
 
 });
 
-TopApp.controller('contactFormController', function ($scope) {
+TopApp.controller('contactFormController', function ($scope, userFactory) {
 	console.log("contactFormController");
 })
 
-TopApp.controller('uploadFileController', function ($scope) {
+TopApp.controller('uploadFileController', function ($scope, $location, userFactory) {
 	console.log("uploadFileController");
+	$scope.sessionProgress = false;
+	
+	userFactory.inSession(function (response) {
+		$scope.currentSession = response;
+		if ($scope.currentSession.name != undefined) {
+			$scope.sessionProgress = true;
+		} else {
+			// reroute to HOME
+			console.log("no user logged in.");
+			location.replace("/");
+		}
+		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
+	});
 })
 
-TopApp.controller('messageController', function ($scope) {
+TopApp.controller('messageController', function ($scope, userFactory) {
 	console.log("messageController");
+
+	$scope.sessionProgress = false;
+	
+	userFactory.inSession(function (response) {
+		$scope.currentSession = response;
+		if ($scope.currentSession.name != undefined) {
+			$scope.sessionProgress = true;
+		} else {
+			// reroute to HOME
+			console.log("no user logged in.");
+			location.replace("/");
+		}
+		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
+	});
+	$scope.messageReply = function () {
+		//$('#messageReplyModal').mo
+	}
 })
 
-TopApp.controller('settingsController', function ($scope) {
+TopApp.controller('settingsController', function ($scope, userFactory) {
 	console.log("settingsController");
 })

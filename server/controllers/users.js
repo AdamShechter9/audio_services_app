@@ -7,6 +7,7 @@ var session = require('express-session');
 
 module.exports = {
 	checkEmail: function (req, res) {
+		// Check if email exists in Users DB.
 		console.log("checkEmail->", req.params.email);
 		User.findOne({ email: req.params.email}, function (err, user) {
 			console.log(user);
@@ -18,14 +19,15 @@ module.exports = {
 		})
 	},
 	createUser: function (req, res) {
-		 console.log("createUser", req.body);
-		 var newUser = new User();
-		 newUser.first_name = req.body.first_name;
-		 newUser.last_name= req.body.last_name;
-		 newUser.email = req.body.email;
-		 newUser.userid = uniqueIdGen.uniqueIdGenerate(8, 'aA#');
-		 newUser.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8));
-		 newUser.save(function (err) {
+		// create a new user in the Users DB.
+		console.log("createUser", req.body);
+		var newUser = new User();
+		newUser.first_name = req.body.first_name;
+		newUser.last_name= req.body.last_name;
+		newUser.email = req.body.email;
+		newUser.userid = uniqueIdGen.uniqueIdGenerate(8, 'aA#');
+		newUser.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8));
+		newUser.save(function (err) {
 		 	if (err) {
 				console.log("error! ", err);
 				res.json({error: "error creating user"});
@@ -42,9 +44,10 @@ module.exports = {
 				req.session.save();
 				res.json({sessionuser});
 			}
-		 })
+		})
 	},
 	logInUser: function (req, res) {
+		// Checks credentials and logs in if correct.
 		console.log("logInUser", req.body);
 		User.findOne({email: req.body.email}, (err, user) => {
 			console.log(user);

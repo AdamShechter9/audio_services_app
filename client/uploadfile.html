@@ -18,7 +18,7 @@
 <body ng-app="TopApp">
 
   <!-- NAVIGATION BAR -->
-  <nav class="blue-grey darken-1" id="top-nav" role="navigation" ng-controller="navbarController">
+    <nav class="blue-grey darken-1" id="top-nav" role="navigation" ng-controller="navbarController">
     <div class="nav-wrapper container">
       <!-- <a id="logo-container" href="#" class="brand-logo center"><img id="logo-img" src="./img/coloredLOGO13.png"></a> -->
       <ul class="hide-on-med-and-down" id="med-and-down-menu1">
@@ -30,28 +30,36 @@
       </ul>
       <ul class="right hide-on-med-and-down" id="med-and-down-menu2">
         <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
-         --><li ng-show="sessionProgress" class="fade" ng-class="{in:sessionProgress}"><a class="dropdown-button" href-"javascript:void(0);" data-activates='userDropdown' data-beloworigin="true" data-gutter="0"><span class="light white-text" ng-bind="currentSession.name"></span></a></li><i class="material-icons fade" ng-class="{in:sessionProgress}" ng-show="sessionProgress">perm_identity</i>
+         --><li ng-show="sessionProgress" class="fade" ng-class="{in:sessionProgress}"><a class="dropdown-button" href-"javascript:void(0);" data-activates='userDropdown' data-beloworigin="true" data-gutter="0"><span class="light white-text">{{ currentSession.name }} </span></a></li><i class="material-icons fade" ng-class="{in:sessionProgress}" ng-show="sessionProgress">perm_identity</i>
       </ul>
       <!-- Dropdown Structure -->
       <ul id='userDropdown' class='dropdown-content'>
-          <li><a href="javascript:void(0);">Upload Files</a></li>
+          <li><a href="uploadfile.html">Upload Files</a></li>
           <li><a href="inbox.html">Inbox</a></li>
           <li><a href="javascript:void(0);">Settings</a></li>
           <li><a href="/users/logout">Log Out</a></li>
       </ul>
       <ul id="nav-mobile" class="side-nav blue-grey darken-1">
-        <li><a href="#">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="#">Prices</a></li>
         <li><a href="#">Blog</a></li>
         <li><a href="contact.html">Contact</a></li>
         <div class="divider"></div>
-        <li><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li>
+        <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
+         --><li ng-show="sessionProgress" class="fade" ng-class="{in:sessionProgress}"><a><span class="light white-text">{{ currentSession.name }} </span></a></li>
+         <ul ng-show="sessionProgress">
+          <div class="divider"></div>
+          <li><a href="uploadfile.html">Upload Files</a></li>
+          <li><a href="inbox.html">Inbox</a></li>
+          <li><a href="javascript:void(0);">Settings</a></li>
+          <li><a href="/users/logout">Log Out</a></li>
+        </ul>
       </ul>
+      
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-
 
   <!-- JUMBOTRON SECTION -->
   <div id="index-banner" style="height:690px;" class="parallax-container">
@@ -61,22 +69,24 @@
         <h1 id="jumboheader1" class="header center blue-grey-text text-lighten-4" style="margin-top:0;margin-bottom:100px;">File Upload</h1>
         <br><br><br>
         <div class="row center">
-            <form action="" class="">
-              <div class="container indigo lighten-5" style="padding: 15px; border-radius: 9px;height: 10.5em;">
-                <div class="file-field input-field">
-                  <div class="btn">
-                    <span>File</span>
-                    <input type="file">
-                  </div>
-                  <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                  </div>
+          <!-- uploadFileController Section -->
+          <form ng-controller="uploadFileController">
+            <div class="container indigo lighten-5" style="padding: 15px; border-radius: 9px;height: 10.5em;">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>File</span>
+                  <input type="file">
                 </div>
-                <button class="btn waves-effect waves-light right" type="button" ng-click="">
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+              <button class="btn waves-effect waves-light right" type="button" ng-click="">
                   Send<i class="material-icons right">input</i>
-                </button>
-              </div>        
-            </form>
+              </button>
+            </div>        
+          </form>
+          
         </div>
         <br><br>
 

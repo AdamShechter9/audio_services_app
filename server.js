@@ -10,8 +10,11 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/client')));
 
 app.use(session({
-	secret: 'chromawave',
-}));  // string for encryption
+	secret: 'chromawave', // string for encryption
+	cookieName: 'session',
+	duration: 30 * 60 * 1000,
+  	activeDuration: 5 * 60 * 1000,
+}));  
 
 // DB Config file
 require('./server/config/mongoose.js');
