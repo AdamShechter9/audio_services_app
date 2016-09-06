@@ -55,8 +55,92 @@
   <!-- MODAL EMAIL -->
     <div id="messageModal" class="modal" >
     <div class="modal-content">
-      <h4>Message</h4>
-        
+      <h5>Done with mastering "Amazing Things"</h5>
+      <hr>
+        <ul>
+          <li>From: Warp9Audio</li>
+          <li>To: Adam Shechter</li>
+          <li>Date: July 1st, 2016</li>
+        </ul>
+        <hr>
+        <div class="section">
+          <p class="lighter">Hey, all done with amazing things.  The link for download is here. https://www.dropbox.com/s/rcb4c4cdreqif3e/Getting%20Started.pdf?dl=0</p>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col sm6">
+            <button class="btn waves-effect blue-grey waves-light modal-close modal-trigger modal-action" href="#messageReplyModal" type="button" name="action">Reply&nbsp&nbsp<i class="fa fa-reply" style="font-size: 1.1em;" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="col sm6 right">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Close&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div id="messageReplyModal" class="modal" >
+    <div class="modal-content">
+        <ul>
+          <li>From: Adam Shechter</li>
+          <li>To: Warp9Audio</li>
+          <li>Date: Sept 2nd, 2016</li>
+        </ul>
+        <div class="section">
+          <form>
+            <div class="input-field col s12">
+              <input id="title" type="text" name="title" class="validate" value="Re: Done with mastering "Amazing Things">
+              <label for="title">Subject</label>
+            </div>
+              <div class="input-field col s12">
+                <textarea id="reply_text" class="materialize-textarea" name="reply_text" minlength="5" class="validate"></textarea>
+                <label for="textarea1">Message</label>
+              </div>
+          </form>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col sm6">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Send&nbsp&nbsp<i class="fa fa-reply" style="font-size: 1.1em;" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="col sm6 right">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Cancel&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div id="messageNewModal" class="modal" >
+    <div class="modal-content">
+        <ul>
+          <li>From: Adam Shechter</li>
+          <li>To: Warp9Audio</li>
+          <li>Date: Sept 2nd, 2016</li>
+        </ul>
+        <div class="section">
+          <form>
+            <div class="input-field col s12">
+              <input id="title" type="text" name="title" class="validate">
+              <label for="title">Subject</label>
+            </div>
+              <div class="input-field col s12">
+                <textarea id="reply_text" class="materialize-textarea" name="reply_text" minlength="5" class="validate"></textarea>
+                <label for="textarea1">Message</label>
+              </div>
+          </form>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col sm6">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Send&nbsp&nbsp<i class="material-icons" style="font-size: 1em;vertical-align: top;" aria-hidden="true">mode_edit</i>
+            </button>
+          </div>
+          <div class="col sm6 right">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Cancel&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
     </div>
   </div>
 
@@ -78,6 +162,12 @@
             </thead>
             <tbody>
               <tr>
+                <td><i class="material-icons red-text" style="font-size: 0.8em;">grade</i><em>Warp9Audio</em></td>
+                <td><em>Adam Shechter</em></td>
+                <td><em>Re: "Lovely" song needs mastering</em></td>
+                <td><em>Aug 31th, 2016</em></td>
+              </tr>
+              <tr>
                 <td>Adam Shechter</td>
                 <td>Warp9Audio</td>
                 <td>"Lovely" song needs mastering</td>
@@ -89,14 +179,16 @@
                 <td>Need mastering on an EP</td>
                 <td>July 5th, 2016</td>
               </tr>
-              <tr>
+              <tr class="modal-trigger" href="#messageModal">
                 <td>Warp9Audio</td>
                 <td>Adam Shechter</td>
                 <td>Done with mastering "Amazing Things"</td>
-                <td>July 1th, 2016</td>
+                <td>July 1st, 2016</td>
               </tr>
             </tbody>
           </table>
+          <button class="btn waves-effect blue-grey waves-light modal-trigger" href="#messageNewModal" type="button" name="newMessage"  style="bottom: 2em;position: absolute;"  >New Message&nbsp&nbsp<i class="material-icons" style="font-size: 1.1em;vertical-align: top;">email</i>
+            </button>
         </div>
       </div>
     </div>
