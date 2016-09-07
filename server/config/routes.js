@@ -61,6 +61,19 @@ module.exports = function (app) {
 		console.log("getting messages for user", req.session.userid);
 		MessagesController.getMessages(req, res);
 	})
+	app.get('/messages/admin', function (req, res) {
+		// get all messages from user inbox
+		console.log("getting messages for admin", req.session.userid);
+		MessagesController.getAllMessages(req, res);
+	})
+	app.post('/messages/read', function (req, res) {
+		console.log("marking message as read");
+		MessagesController.readMessage(req, res);
+	})
+	app.post('/messages/archive', function (req, res) {
+		console.log("marking message as archived");
+		MessagesController.archiveMessage(req, res);
+	})
 	app.post('/messages/send', function (req, res) {
 		// send a new message and store in database
 		console.log("sending message for user", req.session.userid);

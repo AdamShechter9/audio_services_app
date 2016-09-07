@@ -5,6 +5,7 @@
 var TopApp = angular.module('TopApp', ['ui.materialize']);
 
 var ADMIN = "warp9mixmaster@gmail.com";
+var ADMINTITLE = "Warp9 Audio";
 
 
 // -----------------------------------------------------------------
@@ -28,6 +29,9 @@ TopApp.factory('userFactory', function ($http) {
 				callback(data.data.error);
 			} else {
 				sessionuser = data.data.sessionuser;
+				if (sessionuser.email === ADMIN) {
+					sessionuser.name = ADMINTITLE;
+				}
 				callback(sessionuser);
 			}
 		})
@@ -94,7 +98,44 @@ TopApp.factory('messageFactory', function ($http) {
 				callback(messages);
 			}
 		})
-	}
+	};
+
+	factory.markRead = function (message, callback) {
+		console.log("markRead");
+		$http.post('/messages/read', message).then(function(data) {
+			//console.log("markRead response", data.data);
+			if (data.data.hasOwnProperty('error')) {
+				callback(data.data);
+			} else {
+				callback();
+			}
+		})
+	};
+
+	factory.markArchived = function (message, callback) {
+		console.log("markArchived", message);
+		$http.post('/messages/archive', message).then(function(data) {
+			//console.log("markArchived response", data.data);
+			if (data.data.hasOwnProperty('error')) {
+				callback(data.data);
+			} else {
+				callback();
+			}
+		})
+	};
+
+	factory.getAllMessages = function (callback) {
+		//console.log("messageFactory->getMessages");
+		$http.get('/messages/admin').then(function(data) {
+			//console.log("getMessages response", data.data);
+			if (data.data.hasOwnProperty('error')) {
+				callback(data.data);
+			} else {
+				messages = data.data.messages;
+				callback(messages);
+			}
+		})
+	};
 
 	factory.createMessage = function (message, callback) {
 		console.log("messageFactory->createMessage", message);
@@ -105,7 +146,7 @@ TopApp.factory('messageFactory', function ($http) {
 				callback();
 			}
 		})
-	}
+	};
 
 	return factory;
 })
@@ -178,11 +219,15 @@ TopApp.controller('loginController', function ($scope, userFactory, $location) {
 
 TopApp.controller('navbarController', function ($scope, userFactory) {
 	$scope.sessionProgress = false;
+	$scope.sessionAdmin = false;
 
 	userFactory.inSession(function (response) {
 		$scope.currentSession = response;
 		if ($scope.currentSession.name != undefined) {
 			$scope.sessionProgress = true;
+			if ($scope.currentSession.email === ADMIN) {
+				$scope.sessionAdmin = true;
+			}
 		}
 		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
 	});
@@ -211,7 +256,7 @@ TopApp.controller('uploadFileController', function ($scope, $location, userFacto
 })
 
 TopApp.controller('messageController', function ($scope, userFactory, messageFactory) {
-	var messages = [];
+	$scope.messages = [];
 
 	console.log("messageController");
 
@@ -226,18 +271,60 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 			console.log("no user logged in.");
 			location.replace("/");
 		}
-		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
+		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession);
+		getInboxMessages();
 	});
-
 	function getInboxMessages () {
-		messageFactory.getMessages(function (data) {
-			if (!(data.hasOwnProperty('error'))) {
-				console.log("getInboxMessages->data", data);
-				messages = data.messages;
-			}
-		})
+		if ($scope.currentSession.email === ADMIN) {
+			// admin logged in
+			console.log("admin logged in. get all messages.")
+			messageFactory.getAllMessages(function (data) {
+				if (!(data.hasOwnProperty('error'))) {
+					console.log("getInboxMessages->data", data);
+					$scope.messages = data;
+					console.log($scope.messages)
+				}
+			})
+		} else {
+			messageFactory.getMessages(function (data) {
+				if (!(data.hasOwnProperty('error'))) {
+					console.log("getInboxMessages->data", data);
+					$scope.messages = data;
+					console.log($scope.messages)
+				}
+			})
+		}
 	}
-
+	$scope.readMessage = function (message) {
+		$scope.allowedReply = false;
+		if (message.name != $scope.currentSession.name) {
+			$scope.allowedReply = true;
+		}
+		console.log("readMessage", message);
+		$scope.readMessage.from = message.name;
+		$scope.readMessage.to = message.to;
+		$scope.readMessage.date = message.createdAt;
+		$scope.readMessage.text = message.text;
+		$scope.readMessage.title = message.title;
+		$scope.readMessage.userid = message.userid;
+		$scope.readMessage.email = message.email;
+		$scope.readMessage._id = message._id;
+		$("#messageModal").openModal();
+		if ($scope.currentSession.email !== ADMIN) {
+			messageFactory.markRead(message, function () {
+				getInboxMessages();
+			})
+		}
+	}
+	$scope.markArchived = function () {
+		if ($scope.currentSession.email !== ADMIN) {
+			var message = {};
+			message._id = $scope.readMessage._id;
+			messageFactory.markArchived(message, function () {
+				getInboxMessages();
+			})
+		}
+	}
 	$scope.newMessage = function () {
 		if ($scope.title != undefined && $scope.title != "") {
 			if ($scope.new_text != undefined && $scope.new_text != "") {
@@ -245,7 +332,55 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 					var newMessage = {};
 					newMessage.title = $scope.title;
 					newMessage.text = $scope.new_text;
+					newMessage.name = $scope.currentSession.name;
+					newMessage.email = $scope.currentSession.email;
+					newMessage.userid = $scope.currentSession.userid;
+					if ($scope.currentSession.email !== ADMIN) {
+						newMessage.to = ADMINTITLE;
+					}
 					//console.log(newMessage);
+					messageFactory.createMessage(newMessage, function (){
+						getInboxMessages();
+					})
+					$scope.title = "";
+					$scope.new_text = "";
+				} else {
+					Materialize.toast('Message needs to be longer', 6000);
+				}
+			} else {
+				Materialize.toast('Missing Body Text', 6000);
+			}	
+		} else {
+			Materialize.toast('Missing Title', 6000);
+		}
+	}
+
+	$scope.messageReplyClick = function () {
+		$scope.replyMessage = {};
+		console.log("messageReplyClick");
+		console.log($scope.readMessage.from);
+		console.log($scope.readMessage.to);
+		$scope.replyMessage.to = $scope.readMessage.from;
+		$scope.replyMessage.from = $scope.readMessage.to;
+		$scope.replyMessage.text = "\n-----------------------\nPrevious Message:\n" +
+									$scope.readMessage.text;
+		$scope.replyMessage.title = "re: " +  $scope.readMessage.title;
+		$scope.replyMessage.userid = $scope.readMessage.userid;
+		$scope.replyMessage.email = $scope.readMessage.email;
+		$('#messageReplyModal').openModal();
+	}
+	$scope.newReplyMessage = function () {
+		if ($scope.replyMessage.title != undefined && $scope.replyMessage.title != "") {
+			if ($scope.replyMessage.text != undefined && $scope.replyMessage.text != "") {
+				if ($scope.replyMessage.text.length > 3) {
+					var newMessage = {};
+					newMessage.title = $scope.replyMessage.title;
+					newMessage.text = $scope.replyMessage.text;
+					newMessage.name = $scope.replyMessage.from;
+					newMessage.to = $scope.replyMessage.to;
+					newMessage.email = $scope.replyMessage.email;
+					newMessage.userid = $scope.replyMessage.userid;
+					console.log("newReplyMessage",newMessage);
 					messageFactory.createMessage(newMessage, function (){
 						getInboxMessages();
 					})
@@ -254,19 +389,12 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 				}
 			} else {
 				Materialize.toast('Missing Body Text', 6000);
-			}
-			
+			}	
 		} else {
 			Materialize.toast('Missing Title', 6000);
 		}
-		
 	}
 
-	$scope.messageReply = function () {
-		//$('#messageReplyModal').mo
-	}
-
-	getInboxMessages();
 })
 
 TopApp.controller('settingsController', function ($scope, userFactory) {

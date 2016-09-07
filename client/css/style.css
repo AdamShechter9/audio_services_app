@@ -42,14 +42,23 @@ p {
   #top-nav #nav-mobile li a:hover {
     color: #ab47bc; }
 
-#inbox_space {
+#wrapper_inbox {
   width: 100%;
-  height: 500px;
   background-color: #e8eaf6;
-  border-radius: 3em;
-  padding: 3em 3em; }
+  height: 550px;
+  border-radius: 1em;
+  padding-top: 1.5em; }
+
+#inbox_space {
+  width: 97%;
+  height: 450px;
+  background-color: white;
+  padding: 0.5em 1em;
+  overflow: scroll;
+  border-radius: 1em; }
   #inbox_space #messagetable {
-    line-height: 1.2; }
+    line-height: 1.2;
+    height: 1em; }
 
 #index-banner .section {
   position: absolute;
