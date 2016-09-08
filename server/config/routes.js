@@ -1,5 +1,7 @@
 var UsersController = require('../controllers/users.js');
 var MessagesController = require('../controllers/messages.js');
+var ADMIN = "warp9mixmaster@gmail.com";
+var ADMINTITLE = "Warp9 Audio";
 
 module.exports = function (app) {
 	app.get('/users/check/:email', function (req, res) {
@@ -42,6 +44,24 @@ module.exports = function (app) {
 				email: req.session.email
 			};
 			res.json({sessionuser});
+		}
+	})
+	app.get('/users/admin', function (req, res) {
+		// return current user name.  returns undefined if no session.
+		console.log("Admin call for user list");
+		if (req.session.email != ADMIN) {
+			res.json({error: "access denied"});
+		} else {
+			UsersController.getUsers(req,res);
+		}
+	})
+	app.post('/users/admin/remove', function (req, res) {
+		// return current user name.  returns undefined if no session.
+		console.log("Admin call to erase user");
+		if (req.session.email != ADMIN) {
+			res.json({error: "access denied"});
+		} else {
+			UsersController.removeUser(req,res);
 		}
 	})
 	app.get('/users/settings', function (req, res) {

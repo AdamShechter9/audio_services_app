@@ -6,6 +6,18 @@ var User = mongoose.model('User');
 var session = require('express-session');
 
 module.exports = {
+	getUsers: function (req, res) {
+		console.log("getUsers");
+		User.find({}, (err, users) => {
+			console.log(users);
+			if (!users) {
+				res.json({users: "no users found"});
+			} else {
+				res.json({users: users});
+			}
+		})
+	},
+
 	checkEmail: function (req, res) {
 		// Check if email exists in Users DB.
 		console.log("checkEmail->", req.params.email);
@@ -77,5 +89,18 @@ module.exports = {
 
 			}
 		});
+	},
+	removeUser: function (req, res) {
+		// remove user in the Users DB.
+		console.log("removeUser", req.body);
+		var deleteUser = req.body;
+		User.remove({_id: deleteUser._id}, function (err) {
+			if (err) {
+				console.log("error! ", err);
+				res.json({error: "error deleting user"});
+			} else {
+				res.json({response: "user deleted"});
+			}
+		})
 	}
 }

@@ -77,19 +77,19 @@
         </ul>
         <hr>
         <div class="section">
-          <p class="lighter" ng-bind="readMessage.text"></p>
+          <p class="lighter" style="white-space:pre-wrap;" ng-bind="readMessage.text"></p>
         </div>
         <br>
         <div class="row">
-          <div class="col sm4">
+          <div class="col s12 m4" style="padding-top: 5px;">
             <button class="btn waves-effect blue-grey waves-light modal-close modal-action" type="button" ng-disabled="!(allowedReply)" ng-click="messageReplyClick()">Reply&nbsp&nbsp<i class="fa fa-reply" style="font-size: 1.1em;" aria-hidden="true"></i>
             </button>
           </div>
-          <div class="col sm4 center">
+          <div class="col s12 m4" style="padding-top: 5px;">
             <button class="btn waves-effect blue-grey waves-light modal-close modal-action center" type="button" ng-click="markArchived()" ng-disabled="(readMessage.userid === 'archived')">Archive&nbsp&nbsp
             </button>
           </div>
-          <div class="col sm4 right">
+          <div class="col s12 m4" style="padding-top: 5px;">
             <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Close&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
             </button>
           </div>
@@ -105,11 +105,11 @@
         </ul>
         <div class="section">
           <form>
-            <div class="input-field col s12">
+            <div input-field>
               <input id="title" type="text" name="title" ng-model="replyMessage.title" class="validate">
               <label for="title"></label>
             </div>
-              <div class="input-field col s12">
+              <div input-field>
                 <textarea id="reply_text" class="materialize-textarea" name="reply_text" ng-model="replyMessage.text"></textarea>
                 <label for="textarea1"></label>
               </div>
@@ -133,7 +133,7 @@
     <div class="modal-content">
         <ul>
           <li>From: {{ currentSession.name }}</li>
-          <li>To: Warp9 Audio</li>
+          <li>To: <span ng-bind="adminTitle"></span></li>
         </ul>
         <div class="section">
           <form>
@@ -169,26 +169,27 @@
         <h1 id="jumboheader1" class="header center blue-grey-text text-lighten-4" style="margin-top:-2em;margin-bottom:20px;">Inbox</h1>
         <div class="container" id="wrapper_inbox">
           <div class="container" id="inbox_space">
-            <table class="bordered highlight black-text centered responsive-table" id="messagetable">
-<!--               <thead>
+            <table class="bordered highlight black-text centered" id="messagetable">
+              <thead>
                 <tr>
                   <th>From</th>
                   <th>To</th>
                   <th>Subject</th>
                   <th>Date</th>
                 </tr>
-              </thead> -->
+              </thead>
               <tbody>
                 <tr ng-repeat="message in messages | orderBy: '-createdAt' track by $index" ng-click="readMessage(message)">
                     <td><i class="material-icons red-text" style="font-size: 0.7em;" ng-show="!(message.read)">grade</i><i class="material-icons red-text" style="font-size: 1.2em;" ng-show="(message.userid === 'archived')">not_interested</i>{{message.name}}</td>
                     <td>{{message.to}}</td>
-                    <td class="truncate">{{message.title}}</td>
+                    <td class="truncated" ng-bind="message.title"></td>
                     <td>{{message.createdAt | date}}</td>
                 </tr>
               </tbody>
             </table>
             <button class="btn waves-effect blue-grey waves-light modal-trigger" href="#messageNewModal" type="button" name="newMessage"  style="bottom: 2em;position: absolute;"  >New Message&nbsp&nbsp<i class="material-icons" style="font-size: 1.1em;vertical-align: top;">email</i>
               </button>
+
           </div>
         </div>
       </div>

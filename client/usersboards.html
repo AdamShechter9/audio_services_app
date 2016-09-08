@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Warp9 Audio ADMIN Users Dashboard</title>
+
+  <!-- CSS Dependencies -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+  <!-- Materialize CSS -->
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+</head>
+<body ng-app="TopApp" ng-controller="usersController">
+
+  <!-- NAVIGATION BAR -->
+    <nav class="blue-grey darken-1" id="top-nav" role="navigation" ng-controller="navbarController">
+    <div class="nav-wrapper container">
+      <!-- <a id="logo-container" href="#" class="brand-logo center"><img id="logo-img" src="./img/coloredLOGO13.png"></a> -->
+      <ul class="hide-on-med-and-down" id="med-and-down-menu1">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="#">Prices</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <ul class="right hide-on-med-and-down" id="med-and-down-menu2">
+        <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
+         --><li ng-show="sessionProgress" class="fade right-align" ng-class="{in:sessionProgress}" style="width: 200px;"><a class="dropdown-button" href-"javascript:void(0);" data-activates='userDropdown' data-beloworigin="true" data-gutter="0"><span class="light white-text">{{ currentSession.name }}</span></a></li><i class="material-icons fade" ng-class="{in:sessionProgress}" ng-show="sessionProgress">perm_identity</i>
+      </ul>
+      <!-- Dropdown Structure -->
+      <ul id='userDropdown' class='dropdown-content'>
+          <li><a href="uploadfile.html">Upload Files</a></li>
+          <li><a href="inbox.html">Inbox</a></li>
+          <li><a href="javascript:void(0);">Settings</a></li>
+          <li ng-show="sessionAdmin"><a href="usersboards.html" class="red-text">Users Dashboard</a>
+          <li ng-show="sessionAdmin"><a href="#" class="red-text">File Manager</a>
+          <li><a href="/users/logout">Log Out</a></li>
+      </ul>
+      <ul id="nav-mobile" class="side-nav blue-grey darken-1">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="#">Prices</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <div class="divider"></div>
+        <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
+         --><li ng-show="sessionProgress" class="fade" ng-class="{in:sessionProgress}"><a><span class="light white-text">{{ currentSession.name }} </span></a></li>
+         <ul ng-show="sessionProgress">
+          <div class="divider"></div>
+          <li><a href="uploadfile.html">Upload Files</a></li>
+          <li><a href="inbox.html">Inbox</a></li>
+          <li><a href="javascript:void(0);">Settings</a></li>
+          <li ng-show="sessionAdmin"><a href="usersboards.html" class="red-text">Users Dashboard</a>
+          <li ng-show="sessionAdmin"><a href="#" class="red-text">File Manager</a>
+          <li><a href="/users/logout">Log Out</a></li>
+        </ul>
+      </ul>
+      
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <!-- MESSAGE NEW -->
+  <div id="messageNewModal" class="modal" >
+    <div class="modal-content">
+        <ul>
+          <li>From: <span ng-bind="messageUser.from"></span></li>
+          <li>To: <span ng-bind="messageUser.name"></span></li>
+        </ul>
+        <div class="section">
+          <form>
+            <div class="input-field col s12">
+              <input id="title" type="text" ng-model="title" class="validate">
+              <label for="title">Subject</label>
+            </div>
+              <div class="input-field col s12">
+                <textarea id="new_text" class="materialize-textarea" ng-model="new_text" minlength="5" class="validate"></textarea>
+                <label for="textarea1">Message</label>
+              </div>
+          </form>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col sm6">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" ng-click="newMessage()">Send&nbsp&nbsp<i class="material-icons" style="font-size: 1em;vertical-align: top;" aria-hidden="true">mode_edit</i>
+            </button>
+          </div>
+          <div class="col sm6 right">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Cancel&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- JUMBOTRON SECTION -->
+  <div id="index-banner" style="height:780px;" class="parallax-container">
+    <div class="section" style="top:25%;">
+      <div class="container">
+        
+        <h1 id="jumboheader1" class="header center blue-grey-text text-lighten-4" style="margin-top:-2em;margin-bottom:20px;">Users Dashboard</h1>
+        <div class="container" id="wrapper_inbox">
+          <div class="container" id="inbox_space">
+            <table class="bordered highlight black-text centered" id="messagetable">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>ID</th>
+                  <th>dateCreated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="user in users | orderBy: '-last_name'">
+                  <td>{{ user.first_name }} {{ user.last_name }}</td>
+                  <td ng-bind="user.email"></td>
+                  <td ng-bind="user.userid">asdfq345kj5</td>
+                  <td ng-bind="user.createdAt | date"></td>
+                  <td><button class="btn btn-flat" ng-click="deleteUser(user)"><i class="material-icons">delete</i></button><button class="btn btn-flat" ng-click="messageUserNew(user)"><i class="material-icons">mode_edit</i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="./img/footballgame.jpg" style="height:auto;"  alt="faders"></div>
+  </div>
+
+  <footer class="page-footer blue-grey darken-1">
+      <div class="container">
+          <h6 class="header white-text center-align no-pad-bot">Website design by ChromaWave Design LLC</h6>
+      </div>
+    <div class="footer-copyright blue-grey darken-1">
+      <div class="container">
+        <div class="row">
+          <span class="">Copyright  &copy 2016</span>&nbsp|&nbsp
+          <span class=""> Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for: jQuery, angular, materialize, and angular-materialize. All of which are needed. -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.1/angular-materialize.min.js"></script>
+    <script src="js/init.js"></script>
+
+    <!-- Angular app -->
+    <script type="text/javascript" src="js/app-angular.js"></script>
+
+  
+  
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+  </body>
+</html>

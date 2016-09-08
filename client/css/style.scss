@@ -12,7 +12,9 @@
 @mixin position_fixed () {
   position: fixed;
 }
-
+.angular-with-newlines {
+  white-space: pre;
+}
 
 nav ul a,
 nav .brand-logo {
@@ -89,7 +91,9 @@ p {
 
   #messagetable {
     line-height: 1.2;
-    height: 1em;
+    
+    td {
+    }
   }
 }
 

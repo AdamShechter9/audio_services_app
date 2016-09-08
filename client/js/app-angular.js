@@ -15,6 +15,7 @@ var ADMINTITLE = "Warp9 Audio";
 
 // -----------------------------------------------------------------
 // FACTORIES
+// -----------------------------------------------------------------
 // userFactory
 TopApp.factory('userFactory', function ($http) {
 	var factory = {};
@@ -33,6 +34,33 @@ TopApp.factory('userFactory', function ($http) {
 					sessionuser.name = ADMINTITLE;
 				}
 				callback(sessionuser);
+			}
+		})
+	}
+
+	factory.getAllUsers = function (callback) {
+		console.log("getAllUsers");
+		$http.get('/users/admin').then(function(data) {
+			console.log("getAllUsers callback", data);
+			if (data.data.hasOwnProperty('error')) {
+				console.log(data.data.error);
+				callback(data.data.error);
+			} else {
+				if (sessionuser.email === ADMIN) {
+					callback(data.data.users);
+				}
+			}
+		})
+	}
+
+	factory.deleteUser = function (user, callback) {
+		console.log("deleteUser", user);
+		$http.post('users/admin/remove', user).then(function(data) {
+			if (data.data.hasOwnProperty('error')) {
+				console.log(data.data.error);
+				callback(data.data.error);
+			} else {
+				callback();
 			}
 		})
 	}
@@ -81,7 +109,7 @@ TopApp.factory('userFactory', function ($http) {
 	};
 	return factory;
 });
-
+// -----------------------------------------------------------------
 // messageFactory
 TopApp.factory('messageFactory', function ($http) {
 	var factory = {};
@@ -154,12 +182,12 @@ TopApp.factory('messageFactory', function ($http) {
 
 // -----------------------------------------------------------------
 // CONTROLLERS
+// registerController
 TopApp.controller('registerController', function ($scope, userFactory) {
 	console.log("registerController");
 
 	$scope.registerUser = function () {
 		var inputValid = true;
-
 		if (($scope.password != undefined)&&($scope.password != $scope.password_confirm)) {
 			inputValid = false;
 		}
@@ -190,9 +218,9 @@ TopApp.controller('registerController', function ($scope, userFactory) {
 			Materialize.toast('Error in form input!', 6000);
 		}
 	}
-
 });
-
+// -----------------------------------------------------------------
+// loginController
 TopApp.controller('loginController', function ($scope, userFactory, $location) {
 	console.log("loginController");
 	
@@ -213,10 +241,9 @@ TopApp.controller('loginController', function ($scope, userFactory, $location) {
 			} 
 		})	
 	}
-
-
 });
-
+// -----------------------------------------------------------------
+// navbarController
 TopApp.controller('navbarController', function ($scope, userFactory) {
 	$scope.sessionProgress = false;
 	$scope.sessionAdmin = false;
@@ -231,13 +258,14 @@ TopApp.controller('navbarController', function ($scope, userFactory) {
 		}
 		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
 	});
-
 });
-
+// -----------------------------------------------------------------
+// contactFormController
 TopApp.controller('contactFormController', function ($scope, userFactory) {
 	console.log("contactFormController");
 })
-
+// -----------------------------------------------------------------
+// uploadFileController
 TopApp.controller('uploadFileController', function ($scope, $location, userFactory) {
 	console.log("uploadFileController");
 	$scope.sessionProgress = false;
@@ -251,15 +279,15 @@ TopApp.controller('uploadFileController', function ($scope, $location, userFacto
 			console.log("no user logged in.");
 			location.replace("/");
 		}
-		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
+		console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
 	});
 })
-
+// -----------------------------------------------------------------
+// messageController
 TopApp.controller('messageController', function ($scope, userFactory, messageFactory) {
 	$scope.messages = [];
-
+	$scope.adminTitle = ADMINTITLE;
 	console.log("messageController");
-
 	$scope.sessionProgress = false;
 	
 	userFactory.inSession(function (response) {
@@ -271,7 +299,7 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 			console.log("no user logged in.");
 			location.replace("/");
 		}
-		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession);
+		console.log("messageController->",$scope.sessionProgress,$scope.currentSession);
 		getInboxMessages();
 	});
 	function getInboxMessages () {
@@ -354,7 +382,6 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 			Materialize.toast('Missing Title', 6000);
 		}
 	}
-
 	$scope.messageReplyClick = function () {
 		$scope.replyMessage = {};
 		console.log("messageReplyClick");
@@ -367,6 +394,7 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 		$scope.replyMessage.title = "re: " +  $scope.readMessage.title;
 		$scope.replyMessage.userid = $scope.readMessage.userid;
 		$scope.replyMessage.email = $scope.readMessage.email;
+		$('#reply_text').trigger('autoresize');
 		$('#messageReplyModal').openModal();
 	}
 	$scope.newReplyMessage = function () {
@@ -382,7 +410,10 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 					newMessage.userid = $scope.replyMessage.userid;
 					console.log("newReplyMessage",newMessage);
 					messageFactory.createMessage(newMessage, function (){
-						getInboxMessages();
+						setTimeout(function () {
+							getInboxMessages();
+						}, 1000);
+						
 					})
 				} else {
 					Materialize.toast('Message needs to be longer', 6000);
@@ -394,9 +425,91 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 			Materialize.toast('Missing Title', 6000);
 		}
 	}
-
-})
-
+});
+// -----------------------------------------------------------------
+// settingsController
 TopApp.controller('settingsController', function ($scope, userFactory) {
 	console.log("settingsController");
+})
+// -----------------------------------------------------------------
+// usersController
+TopApp.controller('usersController', function ($scope, userFactory, messageFactory) {
+	$scope.users = [];
+	$scope.messageUser = {};
+
+	console.log("usersController");
+
+	$scope.sessionProgress = false;
+	userFactory.inSession(function (response) {
+		$scope.currentSession = response;
+		if ($scope.currentSession.name != undefined) {
+			$scope.sessionProgress = true;
+		} else {
+			// reroute to HOME
+			console.log("no user logged in.");
+			location.replace("/");
+		}
+		console.log("usersController->",$scope.sessionProgress,$scope.currentSession);
+		getAllUsers();
+	});
+
+	var getAllUsers = function () {
+		userFactory.getAllUsers(function (data) {
+			console.log("usersController=>getAllUsers->",data);
+			$scope.users = data;
+		});
+	}
+	$scope.deleteUser = function (user) {
+		console.log("deleteUser", user);
+		if (user.email === ADMIN) {
+			alert("can't delete administrator!");
+		} else {
+			var confirmed = confirm("this can't be undone!");
+			if (confirmed) {
+				userFactory.deleteUser(user, function(data) {
+					if (data) {
+						console.log("error", data);
+					} else {
+						getAllUsers();
+					}
+					
+				})
+			}
+		}
+	}
+	$scope.messageUserNew = function (user) {
+		$scope.messageUser.from = ADMINTITLE;
+		$scope.messageUser.name = user.first_name + " " + user.last_name;
+		$scope.messageUser.userid = user.userid;
+		$scope.messageUser.email = user.email;
+		$("#messageNewModal").openModal();
+	}
+
+	$scope.newMessage = function () {
+		if ($scope.title != undefined && $scope.title != "") {
+			if ($scope.new_text != undefined && $scope.new_text != "") {
+				if ($scope.new_text.length > 3) {
+					var newMessage = {};
+					newMessage.title = $scope.title;
+					newMessage.text = $scope.new_text;
+					newMessage.name = ADMINTITLE;
+					newMessage.email = $scope.messageUser.email;
+					newMessage.userid = $scope.messageUser.userid;
+					newMessage.to = $scope.messageUser.name;
+					//console.log(newMessage);
+					messageFactory.createMessage(newMessage, function (){
+					})
+					$scope.title = "";
+					$scope.new_text = "";
+				} else {
+					Materialize.toast('Message needs to be longer', 6000);
+				}
+			} else {
+				Materialize.toast('Missing Body Text', 6000);
+			}	
+		} else {
+			Materialize.toast('Missing Title', 6000);
+		}
+	}
+
 })

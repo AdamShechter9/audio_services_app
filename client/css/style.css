@@ -5,6 +5,9 @@
  *
  * Made By MaterializeCSS.com
  */
+.angular-with-newlines {
+  white-space: pre; }
+
 nav ul a,
 nav .brand-logo {
   color: #444; }
@@ -57,8 +60,7 @@ p {
   overflow: scroll;
   border-radius: 1em; }
   #inbox_space #messagetable {
-    line-height: 1.2;
-    height: 1em; }
+    line-height: 1.2; }
 
 #index-banner .section {
   position: absolute;

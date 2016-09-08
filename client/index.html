@@ -84,10 +84,12 @@
                   <label for="password">Password</label>
                 </div>
               </div>
-              <div class="row center">
-                <div class="col s12">
-                  <a class="btn waves-effect waves-green deep-purple lighten-2 right modal-trigger modal-action modal-close" href="#modal2">Sign Up<i class="material-icons right">stars</i></a>
-                  <button class="btn waves-effect waves-light blue-grey left" type="button" ng-click="loginUser()">Log In<i class="material-icons right">input</i></button>
+              <div class="row">
+                <div class="col s12 m6" style="padding-top: 5px;">
+                  <button class="btn waves-effect waves-light blue-grey" type="button" ng-click="loginUser()">Log In<i class="material-icons right">input</i></button>
+                </div>
+                <div class="col s12 m6" style="padding-top: 5px;">
+                  <a class="btn waves-effect waves-green btn-flat modal-trigger modal-action modal-close" href="#modal2">Sign Up!</a>
                 </div>
               </div>
               <h6><a href="#">forgot your password?</a></h6>
@@ -102,11 +104,11 @@
         <form id="registerForm" class="col s12">
           <div class="container">
             <div class="row">
-              <div class="input-field col s6">
+              <div class="input-field col s12 m6">
                 <input id="first_name" ng-model="first_name" type="text" minlength="2" class="validate" required>
                 <label for="first_name">First Name</label>
               </div>
-              <div class="input-field col s6">
+              <div class="input-field col s12 m6">
                 <input id="last_name" ng-model="last_name" type="text" minlength="2" class="validate" required>
                 <label for="last_name">Last Name</label>
               </div>
@@ -118,11 +120,11 @@
               </div>
             </div>
             <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
               <input id="password" ng-model="password" type="password" class="validate" minlength="6" required>
               <label for="password">Password</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
               <input id="password_confirm" ng-model="password_confirm" type="password" class="validate" minlength="6" required>
               <label for="password_confirm">Password Confirm</label>
             </div>
