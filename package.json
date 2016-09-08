@@ -15,7 +15,9 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
+    "formidable": "^1.0.17",
     "fs": "0.0.1-security",
+    "mailgun-js": "^0.7.12",
     "mongoose": "^4.5.9",
     "path": "^0.12.7"
   }

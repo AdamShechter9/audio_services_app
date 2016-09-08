@@ -115,6 +115,7 @@ TopApp.factory('messageFactory', function ($http) {
 	var factory = {};
 	var messages = {};
 
+
 	factory.getMessages = function (callback) {
 		//console.log("messageFactory->getMessages");
 		$http.get('/messages').then(function(data) {
