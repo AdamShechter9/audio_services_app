@@ -33,7 +33,7 @@ TopApp.factory('userFactory', function ($http) {
 				console.log(data.data.error);
 				callback(data.data.error);
 			} else {
-				sessionUser = data.data.user.sessionuser;
+				sessionUser = data.data.user;
 				if (sessionUser.email === ADMIN) {
 					sessionUser.name = ADMINTITLE;
 				}
@@ -271,19 +271,18 @@ TopApp.controller('contactFormController', function ($scope, messageFactory) {
 	console.log("contactFormController");
 
 	$scope.sendContactMessage = function () {
-		if ($scope.title != undefined && $scope.title != "") {
-			if ($scope.text != undefined && $scope.text != "") {
-				if ($scope.text.length > 3) {
+		if ($scope.contact.title != undefined && $scope.contact.title != "") {
+			if ($scope.contact.text != undefined && $scope.contact.text != "") {
+				if ($scope.contact.text.length > 3) {
 					var newMessage = {};
-					newMessage.title = $scope.contact.title;
-					newMessage.text = $scope.contact.text;
+					newMessage.title = "WEBSITE CONTACT FORM: " + $scope.contact.title;
+					newMessage.text = "From " + $scope.contact.email + "\n" + $scope.contact.text;
 					newMessage.name = $scope.contact.first_name + " " + $scope.contact.last_name;
 					newMessage.email = $scope.contact.email;
 					newMessage.userid = "contactForm";
 					newMessage.to = ADMINTITLE;
 					//console.log(newMessage);
 					messageFactory.createMessage(newMessage, function (){
-						getInboxMessages();
 					});
 					$scope.contact = {};
 				} else {
