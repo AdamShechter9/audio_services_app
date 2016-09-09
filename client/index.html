@@ -16,19 +16,16 @@
 
 </head>
 <body ng-app="TopApp">
-
-  
-
   <!-- NAVIGATION BAR -->
   <nav class="blue-grey darken-1" id="top-nav" role="navigation" ng-controller="navbarController">
     <div class="nav-wrapper container">
       <!-- <a id="logo-container" href="#" class="brand-logo center"><img id="logo-img" src="./img/coloredLOGO13.png"></a> -->
       <ul class="hide-on-med-and-down" id="med-and-down-menu1">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/about">About</a></li>
         <li><a href="#">Prices</a></li>
         <li><a href="#">Blog</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#/contact">Contact</a></li>
       </ul>
       <ul class="right hide-on-med-and-down" id="med-and-down-menu2">
         <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
@@ -36,28 +33,28 @@
       </ul>
       <!-- Dropdown Structure -->
       <ul id='userDropdown' class='dropdown-content'>
-          <li><a href="uploadfile.html">Upload Files</a></li>
-          <li><a href="inbox.html">Inbox</a></li>
+          <li><a href="#/uploadfile">Upload Files</a></li>
+          <li><a href="#/inbox">Inbox</a></li>
           <li><a href="javascript:void(0);">Settings</a></li>
-          <li ng-show="sessionAdmin"><a href="usersboards.html" class="red-text">Users Dashboard</a>
+          <li ng-show="sessionAdmin"><a href="#/usersboards" class="red-text">Users Dashboard</a>
           <li ng-show="sessionAdmin"><a href="#" class="red-text">File Manager</a>
           <li><a href="/users/logout">Log Out</a></li>
       </ul>
       <ul id="nav-mobile" class="side-nav blue-grey darken-1">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="/#">Home</a></li>
+        <li><a href="#/about">About</a></li>
         <li><a href="#">Prices</a></li>
         <li><a href="#">Blog</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#/contact">Contact</a></li>
         <div class="divider"></div>
         <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
          --><li ng-show="sessionProgress" class="fade" ng-class="{in:sessionProgress}"><a><span class="light white-text">{{ currentSession.name }} </span></a></li>
          <ul ng-show="sessionProgress">
           <div class="divider"></div>
-          <li><a href="uploadfile.html">Upload Files</a></li>
-          <li><a href="inbox.html">Inbox</a></li>
+          <li><a href="#/uploadfile">Upload Files</a></li>
+          <li><a href="#/inbox">Inbox</a></li>
           <li><a href="javascript:void(0);">Settings</a></li>
-          <li ng-show="sessionAdmin"><a href="usersboards.html" class="red-text">Users Dashboard</a>
+          <li ng-show="sessionAdmin"><a href="#/usersboards" class="red-text">Users Dashboard</a>
           <li ng-show="sessionAdmin"><a href="#" class="red-text">File Manager</a>
           <li><a href="/users/logout">Log Out</a></li>
         </ul>
@@ -138,107 +135,12 @@
       </form>
     </div>
   </div>
-  <!-- JUMBOTRON SECTION -->
-  <div id="index-banner" class="parallax-container">
-    <div class="section">
-      <div class="container">
-        <br><br>
-        <h1 id="jumboheader1" class="header center blue-grey-text text-lighten-4">WARP9 AUDIO</h1>
-        <div class="row center">
-          <h5 class="header col s12">Mixing and mastering solutions with the highest attention to details.</h5>
-        </div>
-        <br><br>
 
-      </div>
-    </div>
-    <div class="parallax"><img src="./img/faders2_short.jpg" alt="faders"></div>
-  </div>
+  <!--Angular View-->
+  <div ng-view=""></div>
 
 
-  <div class="container">
-    <div class="section">
-      <div class="row">
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center purple-text"><i class="material-icons">volume_up</i></h2>
-            <h5 class="center">Amazing Sound</h5>
-            <p class="light">We guarantee you amazing hi-def sound quality.  Attention to sonic details and a case-by-case study of frequency curve and dynamic is executed.</p>
-          </div>
-        </div>
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center purple-text"><i class="material-icons">schedule</i></h2>
-            <h5 class="center">Fast Turnaround</h5>
-
-            <p class="light">We are dedicated to meeting your deadlines and self-prioritize according to clients' needs.  We do our best to be fast and accurate, without making a sacrifice with quality.</p>
-          </div>
-        </div>
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center purple-text"><i class="fa fa-money" aria-hidden="true"></i></h2>
-            <h5 class="center">Affordable</h5>
-            <p class="light">As fellow musicians, we know what it's like to be on a budget, and how hard it is to survive in the industry.  We do our best to make our services affordable, and will offer bulk rate for Albums and labels.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="parallax-container valign-wrapper">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <div class="row center">
-          <h5 id="jumboheader2" class="header col s12 grey-text text-lighten-2">We guarantee our sound will be unmatched over loudspeakers or headphones!</h5>
-        </div>
-      </div>
-    </div>
-    <div class="parallax"><img src="./img/edm-show.jpg" alt="Unsplashed background img 2"></div>
-  </div>
-  <div class="container">
-    <div class="section">
-      <div class="row">
-        <div class="col s12 center">
-          <h3><i class="mdi-content-send brown-text"></i></h3>
-          <h4>The Process</h4>
-          <p class="left-align light">Our engineer, Adam, carefully listens to the submitted music for any audible errors or issues with the submission.  If everything sounds and looks ok, we come up with references from similar genres.<br>Next, a spectrum analyzer and level meters are used to study your song and look at the frequencies and dynamics of the various instruments.<br>Now the mastering engineer carefully adjusts your song through plug ins, including but not limited to: Equalizers, Stereo Wideners, Mutliband Compressors, and finally Limiters.<br>
-          Finally, our engineer takes another critical listen and see if anything needs a readjustment, before it is being uploaded and a link is sent. </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="parallax-container valign-wrapper">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <div class="row center">
-          <h5 class="header col s12 light"></h5>
-        </div>
-      </div>
-    </div>
-    <div class="parallax"><img src="./img/recordingstudio.jpg" alt="Unsplashed background img 3"></div>
-  </div>
-  <div class="container">
-    <div class="section">
-      <div class="row">
-        <div class="col-s12 left">
-          <!-- <h3 class="header center-align">What Clients Say</h3> -->
-          <ul id="quotes-list-stagger" class="center-align">
-            <li><h6 class="grey-text"><i>Dude! This song sounds so good! Thank you!!!</i></h6>-Pumpkin</li>
-            <li><h6 class="grey-text"><i>comes highly recommended by us!</i></h6>-Scour Records</li>
-            <li><h6 class="grey-text"><i>This message is HIGHLY endorsed. Adam absolutely KILLS the audio game. Seriously, I am thankful for his efforts on our album.. He went above and beyond.</i></h6>-Willdabeast</li>
-            <li><h6 class="grey-text"><i> My EP was mastered by this legend, can vouch that he is a good man and a better mastering engineer!</i></h6>-Darcy Rank</li>
-          </ul>
-          <ul id="quotes-list-stagger2" class="center-align">
-            <li><h6 class="grey-text"><i>Father Funk approved!</i></h6>-Father Funk</li>
-            <li><h6 class="grey-text"><i>Top work by a top fella!</i></h6>-Spark Arrester</li>
-            <li><h6 class="grey-text"><i> Yes! Adam is a beast! Good work man! I highly recommend this man's mixing and mastering!</i></h6>-EVeryman</li>
-            <li><h6 class="grey-text"><i>The best of the best!</i></h6>-Brian Zerega</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
+    <!--Footer-->
   <footer class="page-footer blue-grey darken-1">
       <div class="container">
           <h6 class="header white-text center-align no-pad-bot">Website design by ChromaWave Design LLC</h6>
@@ -256,6 +158,7 @@
   <!-- JavaScript for: jQuery, angular, materialize, and angular-materialize. All of which are needed. -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
     <script type="text/javascript" src="js/materialize.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.1/angular-materialize.min.js"></script>
     <script src="js/init.js"></script>

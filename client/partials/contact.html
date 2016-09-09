@@ -1,0 +1,72 @@
+
+<!-- JUMBOTRON SECTION -->
+<div id="index-banner" class="parallax-container">
+    <div class="section">
+        <div class="container">
+            <br><br>
+            <h1 id="jumboheader1" class="header center grey-text text-lighten-4">CONTACT</h1>
+            <div class="row center">
+                <h5 class="header col s12">Please fill out the form below.<br>We'll do our best to respond promptly.</h5>
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+    <div parallax><img src="/img/radio-broadcast.jpg" alt="faders"></div>
+</div>
+
+
+<div class="container">
+    <div class="section">
+
+        <!--   Icon Section   -->
+        <div class="row">
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <form class="col s12" ng-controller="contactFormController">
+        <div class="container">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input type="text" ng-model="contact.first_name" minlength="2" class="validate">
+                    <label>First Name</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input type="text" ng-model="contact.last_name" class="validate" minlength="2">
+                    <label>Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input ng-model="contact.email" type="email" class="validate">
+                    <label>Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="subject" ng-model="contact.title" name="subject">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="Mixing and/or Mastering Process">Mixing and/or Mastering Process</option>
+                        <option value="Technical Questions">Technical Questions</option>
+                        <option value="Payment">Payment</option>
+                        <option value="Site Support">Site Support/Feedback</option>
+                    </select>
+                    <label>This is about...</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class ="input-field col s12">
+                    <textarea ng-model="contact.text" class="materialize-textarea validate" name="message_text" minlength="10"></textarea>
+                    <label>Message</label>
+                </div>
+            </div>
+            <div class="row center">
+                <button class="btn waves-effect blue-grey waves-light right" ng-click="sendContactMessage()" type="button">Submit<i class="material-icons right">input</i></button>
+            </div>
+
+        </div>
+    </form>
+</div>

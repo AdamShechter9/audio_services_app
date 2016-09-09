@@ -1,0 +1,69 @@
+<div ng-controller="usersController">
+ <!-- MESSAGE NEW -->
+  <div id="messageNewModal" class="modal" >
+    <div class="modal-content">
+        <ul>
+          <li>From: <span ng-bind="messageUser.from"></span></li>
+          <li>To: <span ng-bind="messageUser.name"></span></li>
+        </ul>
+        <div class="section">
+          <form>
+            <div class="input-field col s12">
+              <input id="title" type="text" ng-model="title" class="validate">
+              <label for="title">Subject</label>
+            </div>
+              <div class="input-field col s12">
+                <textarea id="new_text" class="materialize-textarea" ng-model="new_text" minlength="5" class="validate"></textarea>
+                <label for="textarea1">Message</label>
+              </div>
+          </form>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col sm6">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" ng-click="newMessage()">Send&nbsp&nbsp<i class="material-icons" style="font-size: 1em;vertical-align: top;" aria-hidden="true">mode_edit</i>
+            </button>
+          </div>
+          <div class="col sm6 right">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Cancel&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- JUMBOTRON SECTION -->
+  <div id="index-banner" style="height:780px;" class="parallax-container">
+    <div class="section" style="top:25%;">
+      <div class="container">
+        
+        <h1 id="jumboheader1" class="header center blue-grey-text text-lighten-4" style="margin-top:-2em;margin-bottom:20px;">Users Dashboard</h1>
+        <div class="container" id="wrapper_inbox">
+          <div class="container" id="inbox_space">
+            <table class="bordered highlight black-text centered" id="messagetable">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>ID</th>
+                  <th>dateCreated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="user in users | orderBy: '-last_name'">
+                  <td>{{ user.first_name }} {{ user.last_name }}</td>
+                  <td ng-bind="user.email"></td>
+                  <td ng-bind="user.userid">asdfq345kj5</td>
+                  <td ng-bind="user.createdAt | date"></td>
+                  <td><button class="btn btn-flat" ng-click="deleteUser(user)"><i class="material-icons">delete</i></button><button class="btn btn-flat" ng-click="messageUserNew(user)"><i class="material-icons">mode_edit</i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="../img/footballgame.jpg" style="height:auto;" alt="faders"></div>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<div ng-controller="messageController">
+  <!-- MODAL EMAIL -->
+  <div id="messageModal" class="modal" >
+    <div class="modal-content">
+      <h5 ng-bind="readMessage.title"></h5>
+      <hr>
+        <ul>
+          <li>From: {{readMessage.from}}</li>
+          <li>To: {{readMessage.to}}</li>
+          <li>Date: {{readMessage.date | date}}</li>
+        </ul>
+        <hr>
+        <div class="section">
+          <p class="lighter" style="white-space:pre-wrap;" ng-bind="readMessage.text"></p>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col s12 m4" style="padding-top: 5px;">
+            <button class="btn waves-effect blue-grey waves-light modal-close modal-action" type="button" ng-disabled="!(allowedReply)" ng-click="messageReplyClick()">Reply&nbsp&nbsp<i class="fa fa-reply" style="font-size: 1.1em;" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="col s12 m4" style="padding-top: 5px;">
+            <button class="btn waves-effect blue-grey waves-light modal-close modal-action center" type="button" ng-click="markArchived()" ng-disabled="(readMessage.userid === 'archived')">Archive&nbsp&nbsp
+            </button>
+          </div>
+          <div class="col s12 m4" style="padding-top: 5px;">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Close&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!-- MESSAGE REPLY -->
+  <div id="messageReplyModal" class="modal" >
+    <div class="modal-content">
+        <ul>
+          <li>From: {{ replyMessage.from }}</li>
+          <li>To: {{ replyMessage.to }}</li>
+        </ul>
+        <div class="section">
+          <form>
+            <div input-field>
+              <input id="title" type="text" name="title" ng-model="replyMessage.title" class="validate">
+              <label for="title"></label>
+            </div>
+              <div input-field>
+                <textarea id="reply_text" class="materialize-textarea" name="reply_text" ng-model="replyMessage.text"></textarea>
+                <label for="textarea1"></label>
+              </div>
+          </form>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col sm6">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action" ng-click="newReplyMessage()">Send&nbsp&nbsp<i class="fa fa-reply" style="font-size: 1.1em;" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="col sm6 right">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Cancel&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!-- MESSAGE NEW -->
+  <div id="messageNewModal" class="modal" >
+    <div class="modal-content">
+        <ul>
+          <li>From: {{ currentSession.name }}</li>
+          <li>To: <span ng-bind="adminTitle"></span></li>
+        </ul>
+        <div class="section">
+          <form>
+            <div class="input-field col s12">
+              <input id="title" type="text" ng-model="title" class="validate">
+              <label for="title">Subject</label>
+            </div>
+              <div class="input-field col s12">
+                <textarea id="new_text" class="materialize-textarea" ng-model="new_text" minlength="5" class="validate"></textarea>
+                <label for="textarea1">Message</label>
+              </div>
+          </form>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col sm6">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" ng-click="newMessage()">Send&nbsp&nbsp<i class="material-icons" style="font-size: 1em;vertical-align: top;" aria-hidden="true">mode_edit</i>
+            </button>
+          </div>
+          <div class="col sm6 right">
+            <button class="btn waves-effect blue-grey waves-light modal-close" type="button" name="action">Cancel&nbsp&nbsp<i class="fa fa-times" style="font-size: 1.2em;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- JUMBOTRON SECTION -->
+  <div id="index-banner" style="height:780px;" class="parallax-container">
+    <div class="section" style="top:25%;">
+      <div class="container">
+        
+        <h1 id="jumboheader1" class="header center blue-grey-text text-lighten-4" style="margin-top:-2em;margin-bottom:20px;">Inbox</h1>
+        <div class="container" id="wrapper_inbox">
+          <div class="container" id="inbox_space">
+            <table class="bordered highlight black-text centered" id="messagetable">
+              <thead>
+                <tr>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Subject</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="message in messages | orderBy: '-createdAt' track by $index" ng-click="readMessage(message)">
+                    <td><i class="material-icons red-text" style="font-size: 0.7em;" ng-show="!(message.read)">grade</i><i class="material-icons red-text" style="font-size: 1.2em;" ng-show="(message.userid === 'archived')">not_interested</i>{{message.name}}</td>
+                    <td>{{message.to}}</td>
+                    <td class="truncated" ng-bind="message.title"></td>
+                    <td>{{message.createdAt | date}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn waves-effect blue-grey waves-light" href="#messageNewModal" type="button" name="newMessage"  style="bottom: 2em;position: absolute;"  modal>New Message&nbsp&nbsp<i class="material-icons" style="font-size: 1.1em;vertical-align: top;">email</i>
+              </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div parallax><img src="/img/textures-white.jpg" style="height:auto;" alt="faders"></div>
+  </div>
+</div>
