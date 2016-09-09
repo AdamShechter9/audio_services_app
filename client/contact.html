@@ -18,7 +18,7 @@
 <body ng-app="TopApp">
   <!-- NAVIGATION BAR -->
   
-    <nav class="blue-grey darken-1" id="top-nav" role="navigation" ng-controller="navbarController">
+  <nav class="blue-grey darken-1" id="top-nav" role="navigation" ng-controller="navbarController">
     <div class="nav-wrapper container">
       <!-- <a id="logo-container" href="#" class="brand-logo center"><img id="logo-img" src="./img/coloredLOGO13.png"></a> -->
       <ul class="hide-on-med-and-down" id="med-and-down-menu1">
@@ -30,7 +30,7 @@
       </ul>
       <ul class="right hide-on-med-and-down" id="med-and-down-menu2">
         <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
-         --><li ng-show="sessionProgress" class="fade right-align" ng-class="{in:sessionProgress}" style="width: 200px;"><a class="dropdown-button" href-"javascript:void(0);" data-activates='userDropdown' data-beloworigin="true" data-gutter="0"><span class="light white-text">{{ currentSession.name }}</span></a></li><i class="material-icons fade" ng-class="{in:sessionProgress}" ng-show="sessionProgress">perm_identity</i>
+         --><li ng-show="sessionProgress" class="fade right-align" ng-class="{in:sessionProgress}" style="width: 200px;"><a class="dropdown-button" href="javascript:void(0);" data-activates='userDropdown' data-beloworigin="true" data-gutter="0"><span class="light white-text">{{ currentSession.name }}</span></a></li><i class="material-icons fade" ng-class="{in:sessionProgress}" ng-show="sessionProgress">perm_identity</i>
       </ul>
       <!-- Dropdown Structure -->
       <ul id='userDropdown' class='dropdown-content'>
@@ -72,14 +72,14 @@
             <div class="container">
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="email" ng-model="email" type="email" class="validate" required>
-                  <label for="email">Email</label>
+                  <input ng-model="email" type="email" class="validate" required>
+                  <label>Email</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="password" ng-model="password" type="password" class="validate" required>
-                  <label for="password">Password</label>
+                  <input ng-model="password" type="password" class="validate" required>
+                  <label>Password</label>
                 </div>
               </div>
               <div class="row center">
@@ -162,27 +162,27 @@
   </div>
 
   <div class="container">
-    <form class="col s12">
+    <form class="col s12" ng-controller="contactFormController">
       <div class="container">
         <div class="row">
-          <div class="input-field col s6">
-            <input type="text" id="first_name" name="first_name" minlength="2" class="validate">
-            <label for="first_name">First Name</label>
+          <div class="input-field col s12 m6">
+            <input type="text" ng-model="contact.first_name" minlength="2" class="validate">
+            <label>First Name</label>
           </div>
-          <div class="input-field col s6">
-            <input id="last_name" type="text" name="last_name" class="validate" minlength="2">
-            <label for="last_name">Last Name</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="email" type="email" name="email" class="validate">
-            <label for="email">Email</label>
+          <div class="input-field col s12 m6">
+            <input type="text" ng-model="contact.last_name" class="validate" minlength="2">
+            <label>Last Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <select id="subject" name="subject">
+            <input ng-model="contact.email" type="email" class="validate">
+            <label>Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <select id="subject" ng-model="contact.title" name="subject">
               <option value="" disabled selected>Choose your option</option>
               <option value="Mixing and/or Mastering Process">Mixing and/or Mastering Process</option>
               <option value="Technical Questions">Technical Questions</option>
@@ -193,13 +193,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12">
-            <textarea id="message_text" class="materialize-textarea" name="message_text" minlength="10" class="validate"></textarea>
-            <label for="textarea1">Message</label>
+          <div class ="input-field col s12">
+            <textarea ng-model="contact.text" class="materialize-textarea validate" name="message_text" minlength="10"></textarea>
+            <label>Message</label>
           </div>
         </div>
         <div class="row center">
-          <button class="btn waves-effect blue-grey waves-light right" type="submit">Submit<i class="material-icons right">input</i></button>
+          <button class="btn waves-effect blue-grey waves-light right" ng-click="sendContactMessage()" type="button">Submit<i class="material-icons right">input</i></button>
         </div>
          
       </div>
@@ -223,7 +223,7 @@
 
     <!-- JavaScript for: jQuery, angular, materialize, and angular-materialize. All of which are needed. -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/materialize.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.1/angular-materialize.min.js"></script>
     <script src="js/init.js"></script>

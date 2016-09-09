@@ -13,7 +13,7 @@ app.use(session({
 	secret: 'chromawave', // string for encryption
 	cookieName: 'session',
 	duration: 30 * 60 * 1000,
-  	activeDuration: 5 * 60 * 1000,
+  	activeDuration: 5 * 60 * 1000
 }));  
 
 // DB Config file
@@ -24,4 +24,4 @@ routesetter(app);
 
 app.listen(8000, function () {
 	console.log('cool stuff on: 8000');
-})
+});
