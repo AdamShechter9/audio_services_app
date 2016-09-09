@@ -38,12 +38,12 @@ p {
   box-shadow: 7px 4px 4px grey; }
 #top-nav #med-and-down-menu1 li a {
   color: #eceff1; }
-#top-nav #med-and-down-menu1 li a:hover {
-  color: #ab47bc; }
+  #top-nav #med-and-down-menu1 li a:hover {
+    color: #ab47bc; }
 #top-nav #nav-mobile li a {
   color: #eceff1; }
-#top-nav #nav-mobile li a:hover {
-  color: #ab47bc; }
+  #top-nav #nav-mobile li a:hover {
+    color: #ab47bc; }
 
 #wrapper_inbox {
   width: 100%;
@@ -59,8 +59,8 @@ p {
   padding: 0.5em 1em;
   overflow: scroll;
   border-radius: 1em; }
-#inbox_space #messagetable {
-  line-height: 1.2; }
+  #inbox_space #messagetable {
+    line-height: 1.2; }
 
 #index-banner .section {
   position: absolute;
@@ -88,8 +88,8 @@ p {
   line-height: 0;
   height: auto;
   color: rgba(255, 255, 255, 0.9); }
-.parallax-container .section {
-  width: 100%; }
+  .parallax-container .section {
+    width: 100%; }
 
 @media only screen and (max-width: 992px) {
   .parallax-container .section {
