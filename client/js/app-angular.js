@@ -27,6 +27,9 @@ TopApp.config( function ($routeProvider) {
 		.when('/inbox', {
 			templateUrl: "/partials/inbox.html"
 		})
+		.when('/usersboards', {
+			templateUrl: "/partials/usersboards.html"
+		})
 		.otherwise({
 			redirectTo: "/"
 		});
@@ -43,6 +46,7 @@ TopApp.factory('userFactory', function ($http) {
 	var sessionUser = {};
 
 	factory.sessionState = function (callback) {
+		console.log("sessionState Check", sessionUser);
 		callback (sessionUser);
 	}
 
@@ -274,16 +278,26 @@ TopApp.controller('navbarController', function ($scope, userFactory) {
 	$scope.sessionProgress = false;
 	$scope.sessionAdmin = false;
 
-	userFactory.inSession(function (response) {
-		$scope.currentSession = response;
-		if ($scope.currentSession.name != undefined) {
-			$scope.sessionProgress = true;
-			if ($scope.currentSession.email === ADMIN) {
-				$scope.sessionAdmin = true;
+
+	var checkSession = function () {
+		userFactory.sessionState( function (data) {
+			$scope.currentSession = data;
+			if ( $scope.currentSession.name == undefined ) {
+				// no user logged in
+				userFactory.inSession(function (response) {
+					$scope.currentSession = response;
+					if ($scope.currentSession.name != undefined) {
+						$scope.sessionProgress = true;
+						if ($scope.currentSession.email === ADMIN) {
+							$scope.sessionAdmin = true;
+						}
+					}
+					console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
+				});
 			}
-		}
-		console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
-	});
+		})
+	};
+	checkSession();
 });
 // -----------------------------------------------------------------
 // contactFormController
@@ -323,39 +337,35 @@ TopApp.controller('contactFormController', function ($scope, messageFactory) {
 TopApp.controller('uploadFileController', function ($scope, $location, userFactory) {
 	console.log("uploadFileController");
 	$scope.sessionProgress = false;
-	
-	userFactory.inSession(function (response) {
-		$scope.currentSession = response;
-		if ($scope.currentSession.name != undefined) {
+
+	var checkSession = function () {
+		userFactory.sessionState( function (data) {
+			$scope.currentSession = data;
+			if ( $scope.currentSession.name == undefined ) {
+				// no user logged in
+				userFactory.inSession(function (response) {
+					$scope.currentSession = response;
+					if ($scope.currentSession.name == undefined) {
+						// reroute to HOME
+						console.log("no user logged in.");
+						location.replace("/");
+					}
+					console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
+				});
+			}
 			$scope.sessionProgress = true;
-		} else {
-			// reroute to HOME
-			console.log("no user logged in.");
-			location.replace("/");
-		}
-		console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
-	});
+		})
+	};
+	checkSession();
 });
 // -----------------------------------------------------------------
 // messageController
-TopApp.controller('messageController', function ($scope, userFactory, messageFactory) {
+TopApp.controller('messageController', function ($scope, $location, userFactory, messageFactory) {
 	$scope.messages = [];
 	$scope.adminTitle = ADMINTITLE;
 	console.log("messageController");
 	$scope.sessionProgress = false;
-	
-	userFactory.inSession(function (response) {
-		$scope.currentSession = response;
-		if ($scope.currentSession.name != undefined) {
-			$scope.sessionProgress = true;
-		} else {
-			// reroute to HOME
-			console.log("no user logged in.");
-			location.replace("/");
-		}
-		console.log("messageController->",$scope.sessionProgress,$scope.currentSession);
-		getInboxMessages();
-	});
+
 	function getInboxMessages () {
 		if ($scope.currentSession.email === ADMIN) {
 			// admin logged in
@@ -476,12 +486,53 @@ TopApp.controller('messageController', function ($scope, userFactory, messageFac
 		} else {
 			Materialize.toast('Missing Title', 6000);
 		}
+	};
+	function checkSession () {
+		userFactory.sessionState( function (data) {
+			$scope.currentSession = data;
+			if ( ($scope.currentSession.name == undefined) ) {
+				// no user logged in
+				//console.log("no user logged in");
+				userFactory.inSession(function (response) {
+					$scope.currentSession = response;
+					if ($scope.currentSession.name == undefined) {
+						// reroute to HOME
+						//console.log("no user logged in.");
+						location.replace("/");
+					}
+					console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
+				});
+			}
+			$scope.sessionProgress = true;
+			getInboxMessages();
+		})
 	}
+	checkSession();
 });
 // -----------------------------------------------------------------
 // settingsController
 TopApp.controller('settingsController', function ($scope, userFactory) {
 	console.log("settingsController");
+	function checkSession () {
+		userFactory.sessionState( function (data) {
+			$scope.currentSession = data;
+			if ( $scope.currentSession.name == undefined ) {
+				// no user logged in
+				userFactory.inSession(function (response) {
+					$scope.currentSession = response;
+					if ($scope.currentSession.name == undefined) {
+						// reroute to HOME
+						console.log("no user logged in.");
+						location.replace("/");
+					}
+					console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
+				});
+			}
+			$scope.sessionProgress = true;
+
+		})
+	}
+	checkSession();
 });
 // -----------------------------------------------------------------
 // usersController
@@ -492,18 +543,6 @@ TopApp.controller('usersController', function ($scope, userFactory, messageFacto
 	console.log("usersController");
 
 	$scope.sessionProgress = false;
-	userFactory.inSession(function (response) {
-		$scope.currentSession = response;
-		if ($scope.currentSession.name != undefined) {
-			$scope.sessionProgress = true;
-		} else {
-			// reroute to HOME
-			console.log("no user logged in.");
-			location.replace("/");
-		}
-		console.log("usersController->",$scope.sessionProgress,$scope.currentSession);
-		getAllUsers();
-	});
 
 	var getAllUsers = function () {
 		userFactory.getAllUsers(function (data) {
@@ -563,4 +602,27 @@ TopApp.controller('usersController', function ($scope, userFactory, messageFacto
 			Materialize.toast('Missing Title', 6000);
 		}
 	}
+	function checkSession () {
+		userFactory.sessionState( function (data) {
+			$scope.currentSession = data;
+			if ( $scope.currentSession.name == undefined ) {
+				// no user logged in
+				userFactory.inSession(function (response) {
+					$scope.currentSession = response;
+					if ($scope.currentSession.name == undefined || $scope.currentSession.email != ADMIN) {
+						// reroute to HOME
+						console.log("no user logged in.");
+						location.replace("/");
+					}
+					console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
+				});
+			} else if ($scope.currentSession.email != ADMIN) {
+				console.log("no user logged in.");
+				location.replace("/");
+			}
+			$scope.sessionProgress = true;
+			getAllUsers();
+		})
+	}
+	checkSession();
 });
