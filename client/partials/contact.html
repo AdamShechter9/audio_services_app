@@ -30,11 +30,11 @@
     <form class="col s12" ng-controller="contactFormController">
         <div class="container">
             <div class="row">
-                <div class="input-field col s12 m6">
+                <div class="col s12 m6" input-field>
                     <input type="text" ng-model="contact.first_name" minlength="2" class="validate">
                     <label>First Name</label>
                 </div>
-                <div class="input-field col s12 m6">
+                <div class="col s12 m6" input-field>
                     <input type="text" ng-model="contact.last_name" class="validate" minlength="2">
                     <label>Last Name</label>
                 </div>
@@ -47,7 +47,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <select id="subject" ng-model="contact.title" name="subject">
+                    <select ng-model="contact.title" name="subject" material-select>
                         <option value="" disabled selected>Choose your option</option>
                         <option value="Mixing and/or Mastering Process">Mixing and/or Mastering Process</option>
                         <option value="Technical Questions">Technical Questions</option>

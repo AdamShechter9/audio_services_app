@@ -54,16 +54,16 @@ TopApp.factory('userFactory', function ($http) {
 	var sessionUser = {};
 
 	factory.sessionState = function (callback) {
-		console.log("sessionState Check", sessionUser);
+		//console.log("sessionState Check", sessionUser);
 		callback (sessionUser);
 	}
 
 	factory.inSession = function (callback) {
-		console.log("inSession check");
+		//console.log("inSession check");
 		$http.get('/users/current').then(function(data) {
-			console.log(data);
+			//console.log(data);
 			if (data.data.hasOwnProperty('error')) {
-				console.log(data.data.error);
+				//console.log(data.data.error);
 				callback(data.data.error);
 			} else {
 				sessionUser = data.data.user;
@@ -76,11 +76,11 @@ TopApp.factory('userFactory', function ($http) {
 	};
 
 	factory.getAllUsers = function (callback) {
-		console.log("getAllUsers");
+		//console.log("getAllUsers");
 		$http.get('/users/admin').then(function(data) {
-			console.log("getAllUsers callback", data);
+			//console.log("getAllUsers callback", data);
 			if (data.data.hasOwnProperty('error')) {
-				console.log(data.data.error);
+				//console.log(data.data.error);
 				callback(data.data.error);
 			} else {
 				if (sessionUser.email === ADMIN) {
@@ -91,10 +91,10 @@ TopApp.factory('userFactory', function ($http) {
 	};
 
 	factory.deleteUser = function (user, callback) {
-		console.log("deleteUser", user);
+		//console.log("deleteUser", user);
 		$http.post('users/admin/remove', user).then(function(data) {
 			if (data.data.hasOwnProperty('error')) {
-				console.log(data.data.error);
+				//console.log(data.data.error);
 				callback(data.data.error);
 			} else {
 				callback();
@@ -103,11 +103,11 @@ TopApp.factory('userFactory', function ($http) {
 	};
 
 	factory.createUser = function (newUser, callback) {
-		console.log("createUser->",newUser);
+		//console.log("createUser->",newUser);
 		$http.get('/users/check/'+newUser.email).then(function(data) {
 			if (data.data.result === "not found") {
 				$http.post('/users/register', newUser).then(function(data) {
-					console.log("createUser->post->callback", data);
+					//console.log("createUser->post->callback", data);
 					if (data.data.hasOwnProperty('error')) {
 						callback(data.data.error);
 					} else {
@@ -121,10 +121,10 @@ TopApp.factory('userFactory', function ($http) {
 		})
 	};
 	factory.loginUser = function (user, callback) {
-		console.log("loginUser", user);
+		//console.log("loginUser", user);
 		$http.post('/users/login', user).then(function(data) {
 			//sign in user
-			console.log("loginUser->post->callback", data);
+			//console.log("loginUser->post->callback", data);
 			if (data.data.hasOwnProperty('error')) {
 				callback(data.data.error);
 			} else {
@@ -134,7 +134,7 @@ TopApp.factory('userFactory', function ($http) {
 		})
 	};
 	factory.logoutUser = function (user, callback) {
-		console.log("logoutUser", user);
+		//console.log("logoutUser", user);
 		$http.get('/users/logout').then(function(data) {
 			if (data.hasOwnProperty('error')) {
 				callback(data.error);
@@ -167,7 +167,7 @@ TopApp.factory('messageFactory', function ($http) {
 	};
 
 	factory.markRead = function (message, callback) {
-		console.log("markRead");
+		//console.log("markRead");
 		$http.post('/messages/read', message).then(function(data) {
 			//console.log("markRead response", data.data);
 			if (data.data.hasOwnProperty('error')) {
@@ -179,7 +179,7 @@ TopApp.factory('messageFactory', function ($http) {
 	};
 
 	factory.markArchived = function (message, callback) {
-		console.log("markArchived", message);
+		//console.log("markArchived", message);
 		$http.post('/messages/archive', message).then(function(data) {
 			//console.log("markArchived response", data.data);
 			if (data.data.hasOwnProperty('error')) {
@@ -204,7 +204,7 @@ TopApp.factory('messageFactory', function ($http) {
 	};
 
 	factory.createMessage = function (message, callback) {
-		console.log("messageFactory->createMessage", message);
+		//console.log("messageFactory->createMessage", message);
 		$http.post('/messages/send', message).then(function(data) {
 			if (data.data.hasOwnProperty('error')) {
 				callback(data.data);
@@ -222,7 +222,7 @@ TopApp.factory('messageFactory', function ($http) {
 // CONTROLLERS
 // registerController
 TopApp.controller('registerController', function ($scope, userFactory) {
-	console.log("registerController");
+	//console.log("registerController");
 
 	$scope.registerUser = function () {
 		var inputValid = true;
@@ -244,7 +244,7 @@ TopApp.controller('registerController', function ($scope, userFactory) {
 			userFactory.createUser(user, function (response) {
 				if (response == "success") {
 					// created user
-					console.log("successfully created user!");
+					//console.log("successfully created user!");
 					// reload page?
 					$('#modal2').closeModal();
 					location.reload();
@@ -260,18 +260,18 @@ TopApp.controller('registerController', function ($scope, userFactory) {
 // -----------------------------------------------------------------
 // loginController
 TopApp.controller('loginController', function ($scope, userFactory, $location) {
-	console.log("loginController");
+	//console.log("loginController");
 	
 	$scope.loginUser = function () {
 		var user = {
 			email: $scope.email,
 			password: $scope.password
 		};
-		console.log("loginController", user);
+		//console.log("loginController", user);
 		userFactory.loginUser(user, function (response) {
 			if (response === "success") {
 				// logged in user
-				console.log("successfully logged in user!");
+				//console.log("successfully logged in user!");
 				$('#modal1').closeModal();
 				location.reload();
 			} else {
@@ -300,7 +300,7 @@ TopApp.controller('navbarController', function ($scope, userFactory) {
 							$scope.sessionAdmin = true;
 						}
 					}
-					console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
+					//console.log("navbarController->",$scope.sessionProgress,$scope.currentSession.name);
 				});
 			}
 		})
@@ -311,7 +311,7 @@ TopApp.controller('navbarController', function ($scope, userFactory) {
 // contactFormController
 TopApp.controller('contactFormController', function ($scope, messageFactory) {
 	$scope.contact = {};
-	console.log("contactFormController");
+	//console.log("contactFormController");
 
 	$scope.sendContactMessage = function () {
 		if ($scope.contact.title != undefined && $scope.contact.title != "") {
@@ -328,6 +328,7 @@ TopApp.controller('contactFormController', function ($scope, messageFactory) {
 					messageFactory.createMessage(newMessage, function (){
 					});
 					$scope.contact = {};
+					Materialize.toast('Contact Message Sent!', 6000);
 				} else {
 					Materialize.toast('Message needs to be longer', 6000);
 				}
@@ -343,7 +344,7 @@ TopApp.controller('contactFormController', function ($scope, messageFactory) {
 // -----------------------------------------------------------------
 // uploadFileController
 TopApp.controller('uploadFileController', function ($scope, $location, userFactory) {
-	console.log("uploadFileController");
+	//console.log("uploadFileController");
 	$scope.sessionProgress = false;
 
 	var checkSession = function () {
@@ -355,10 +356,10 @@ TopApp.controller('uploadFileController', function ($scope, $location, userFacto
 					$scope.currentSession = response;
 					if ($scope.currentSession.name == undefined) {
 						// reroute to HOME
-						console.log("no user logged in.");
+						//console.log("no user logged in.");
 						location.replace("/");
 					}
-					console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
+					//console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
 				});
 			}
 			$scope.sessionProgress = true;
@@ -371,26 +372,26 @@ TopApp.controller('uploadFileController', function ($scope, $location, userFacto
 TopApp.controller('messageController', function ($scope, $location, userFactory, messageFactory) {
 	$scope.messages = [];
 	$scope.adminTitle = ADMINTITLE;
-	console.log("messageController");
+	//console.log("messageController");
 	$scope.sessionProgress = false;
 
 	function getInboxMessages () {
 		if ($scope.currentSession.email === ADMIN) {
 			// admin logged in
-			console.log("admin logged in. get all messages.")
+			//console.log("admin logged in. get all messages.")
 			messageFactory.getAllMessages(function (data) {
 				if (!(data.hasOwnProperty('error'))) {
-					console.log("getInboxMessages->data", data);
+					//console.log("getInboxMessages->data", data);
 					$scope.messages = data;
-					console.log($scope.messages)
+					//console.log($scope.messages)
 				}
 			})
 		} else {
 			messageFactory.getMessages(function (data) {
 				if (!(data.hasOwnProperty('error'))) {
-					console.log("getInboxMessages->data", data);
+					//console.log("getInboxMessages->data", data);
 					$scope.messages = data;
-					console.log($scope.messages)
+					//console.log($scope.messages)
 				}
 			})
 		}
@@ -398,7 +399,7 @@ TopApp.controller('messageController', function ($scope, $location, userFactory,
 	$scope.readMessage = function (message) {
         $scope.allowedReply = (message.name != $scope.currentSession.name);
 
-		console.log("readMessage", message);
+		//console.log("readMessage", message);
 		$scope.readMessage.from = message.name;
 		$scope.readMessage.to = message.to;
 		$scope.readMessage.date = message.createdAt;
@@ -454,9 +455,9 @@ TopApp.controller('messageController', function ($scope, $location, userFactory,
 	};
 	$scope.messageReplyClick = function () {
 		$scope.replyMessage = {};
-		console.log("messageReplyClick");
-		console.log($scope.readMessage.from);
-		console.log($scope.readMessage.to);
+		//console.log("messageReplyClick");
+		//console.log($scope.readMessage.from);
+		//console.log($scope.readMessage.to);
 		$scope.replyMessage.to = $scope.readMessage.from;
 		$scope.replyMessage.from = $scope.readMessage.to;
 		$scope.replyMessage.text = "\n-----------------------\nPrevious Message:\n" +
@@ -478,7 +479,7 @@ TopApp.controller('messageController', function ($scope, $location, userFactory,
 					newMessage.to = $scope.replyMessage.to;
 					newMessage.email = $scope.replyMessage.email;
 					newMessage.userid = $scope.replyMessage.userid;
-					console.log("newReplyMessage",newMessage);
+					//console.log("newReplyMessage",newMessage);
 					messageFactory.createMessage(newMessage, function (){
 						setTimeout(function () {
 							getInboxMessages();
@@ -508,7 +509,7 @@ TopApp.controller('messageController', function ($scope, $location, userFactory,
 						//console.log("no user logged in.");
 						location.replace("/");
 					}
-					console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
+					//console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
 				});
 			}
 			$scope.sessionProgress = true;
@@ -520,7 +521,7 @@ TopApp.controller('messageController', function ($scope, $location, userFactory,
 // -----------------------------------------------------------------
 // settingsController
 TopApp.controller('settingsController', function ($scope, userFactory) {
-	console.log("settingsController");
+	//console.log("settingsController");
 	function checkSession () {
 		userFactory.sessionState( function (data) {
 			$scope.currentSession = data;
@@ -530,10 +531,10 @@ TopApp.controller('settingsController', function ($scope, userFactory) {
 					$scope.currentSession = response;
 					if ($scope.currentSession.name == undefined) {
 						// reroute to HOME
-						console.log("no user logged in.");
+						//console.log("no user logged in.");
 						location.replace("/");
 					}
-					console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
+					//console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
 				});
 			}
 			$scope.sessionProgress = true;
@@ -548,18 +549,18 @@ TopApp.controller('usersController', function ($scope, userFactory, messageFacto
 	$scope.users = [];
 	$scope.messageUser = {};
 
-	console.log("usersController");
+	//console.log("usersController");
 
 	$scope.sessionProgress = false;
 
 	var getAllUsers = function () {
 		userFactory.getAllUsers(function (data) {
-			console.log("usersController=>getAllUsers->",data);
+			//console.log("usersController=>getAllUsers->",data);
 			$scope.users = data;
 		});
 	};
 	$scope.deleteUser = function (user) {
-		console.log("deleteUser", user);
+		//console.log("deleteUser", user);
 		if (user.email === ADMIN) {
 			alert("can't delete administrator!");
 		} else {
@@ -567,7 +568,7 @@ TopApp.controller('usersController', function ($scope, userFactory, messageFacto
 			if (confirmed) {
 				userFactory.deleteUser(user, function(data) {
 					if (data) {
-						console.log("error", data);
+						//console.log("error", data);
 					} else {
 						getAllUsers();
 					}
@@ -619,13 +620,13 @@ TopApp.controller('usersController', function ($scope, userFactory, messageFacto
 					$scope.currentSession = response;
 					if ($scope.currentSession.name == undefined || $scope.currentSession.email != ADMIN) {
 						// reroute to HOME
-						console.log("no user logged in.");
+						//console.log("no user logged in.");
 						location.replace("/");
 					}
-					console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
+					//console.log("uploadFileController->",$scope.sessionProgress,$scope.currentSession.name);
 				});
 			} else if ($scope.currentSession.email != ADMIN) {
-				console.log("no user logged in.");
+				//console.log("no user logged in.");
 				location.replace("/");
 			}
 			$scope.sessionProgress = true;
