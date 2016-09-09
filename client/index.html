@@ -16,125 +16,126 @@
 
 </head>
 <body ng-app="TopApp">
+    <nav-bar></nav-bar>
   <!-- NAVIGATION BAR -->
-  <nav class="blue-grey darken-1" id="top-nav" role="navigation" ng-controller="navbarController">
-    <div class="nav-wrapper container">
-      <!-- <a id="logo-container" href="#" class="brand-logo center"><img id="logo-img" src="./img/coloredLOGO13.png"></a> -->
-      <ul class="hide-on-med-and-down" id="med-and-down-menu1">
-        <li><a href="#/">Home</a></li>
-        <li><a href="#/about">About</a></li>
-        <li><a href="#">Prices</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#/contact">Contact</a></li>
-      </ul>
-      <ul class="right hide-on-med-and-down" id="med-and-down-menu2">
-        <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
-         --><li ng-show="sessionProgress" class="fade right-align" ng-class="{in:sessionProgress}" style="width: 200px;"><a class="dropdown-button" href="javascript:void(0);" data-activates='userDropdown' data-beloworigin="true" data-gutter="0"><span class="light white-text">{{ currentSession.name }}</span></a></li><i class="material-icons fade" ng-class="{in:sessionProgress}" ng-show="sessionProgress">perm_identity</i>
-      </ul>
-      <!-- Dropdown Structure -->
-      <ul id='userDropdown' class='dropdown-content'>
-          <li><a href="#/uploadfile">Upload Files</a></li>
-          <li><a href="#/inbox">Inbox</a></li>
-          <li><a href="javascript:void(0);">Settings</a></li>
-          <li ng-show="sessionAdmin"><a href="#/usersboards" class="red-text">Users Dashboard</a>
-          <li ng-show="sessionAdmin"><a href="#" class="red-text">File Manager</a>
-          <li><a href="/users/logout">Log Out</a></li>
-      </ul>
-      <ul id="nav-mobile" class="side-nav blue-grey darken-1">
-        <li><a href="/#">Home</a></li>
-        <li><a href="#/about">About</a></li>
-        <li><a href="#">Prices</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#/contact">Contact</a></li>
-        <div class="divider"></div>
-        <li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li><!-- 
-         --><li ng-show="sessionProgress" class="fade" ng-class="{in:sessionProgress}"><a><span class="light white-text">{{ currentSession.name }} </span></a></li>
-         <ul ng-show="sessionProgress">
-          <div class="divider"></div>
-          <li><a href="#/uploadfile">Upload Files</a></li>
-          <li><a href="#/inbox">Inbox</a></li>
-          <li><a href="javascript:void(0);">Settings</a></li>
-          <li ng-show="sessionAdmin"><a href="#/usersboards" class="red-text">Users Dashboard</a>
-          <li ng-show="sessionAdmin"><a href="#" class="red-text">File Manager</a>
-          <li><a href="/users/logout">Log Out</a></li>
-        </ul>
-      </ul>
-      
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
-  <!-- LOGIN MODAL -->
-  <div id="modal1" class="modal" ng-controller="loginController">
-    <div class="modal-content">
-      <h4>Login</h4>
-          <form id="loginForm" class="col s12">
-            <div class="container">
-              <div class="row">
-                <div class="input-field col s12">
-                  <input ng-model="email" type="email" class="validate" required>
-                  <label for="email">Email</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <input ng-model="password" type="password" class="validate" required>
-                  <label for="password">Password</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col s12 m6" style="padding-top: 5px;">
-                  <button class="btn waves-effect waves-light blue-grey" type="button" ng-click="loginUser()">Log In<i class="material-icons right">input</i></button>
-                </div>
-                <div class="col s12 m6" style="padding-top: 5px;">
-                  <a class="btn waves-effect waves-green btn-flat modal-trigger modal-action modal-close" href="#modal2">Sign Up!</a>
-                </div>
-              </div>
-              <h6><a href="#">forgot your password?</a></h6>
-            </div>
-          </form>
-    </div>
-  </div>
-  <!-- REGISTER MODAL -->
-  <div id="modal2" class="modal" ng-controller="registerController">
-    <div class="modal-content">
-      <h4>Register</h4>
-        <form id="registerForm" class="col s12">
-          <div class="container">
-            <div class="row">
-              <div class="input-field col s12 m6">
-                <input id="first_name" ng-model="first_name" type="text" minlength="2" class="validate" required>
-                <label for="first_name">First Name</label>
-              </div>
-              <div class="input-field col s12 m6">
-                <input id="last_name" ng-model="last_name" type="text" minlength="2" class="validate" required>
-                <label for="last_name">Last Name</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="email" ng-model="email" type="email" class="validate" required>
-                <label for="email">Email</label>
-              </div>
-            </div>
-            <div class="row">
-            <div class="input-field col s12 m6">
-              <input id="password" ng-model="password" type="password" class="validate" minlength="6" required>
-              <label for="password">Password</label>
-            </div>
-            <div class="input-field col s12 m6">
-              <input id="password_confirm" ng-model="password_confirm" type="password" class="validate" minlength="6" required>
-              <label for="password_confirm">Password Confirm</label>
-            </div>
-          </div>
-          <div class="row center">
-            <div class="col s12">
-              <button class="btn waves-effect waves-light blue-grey right" type="button" ng-click="registerUser()">Submit<i class="material-icons right">input</i></button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+  <!--<nav class="blue-grey darken-1" id="top-nav" role="navigation" ng-controller="navbarController">-->
+    <!--<div class="nav-wrapper container">-->
+      <!--&lt;!&ndash; <a id="logo-container" href="#" class="brand-logo center"><img id="logo-img" src="./img/coloredLOGO13.png"></a> &ndash;&gt;-->
+      <!--<ul class="hide-on-med-and-down" id="med-and-down-menu1">-->
+        <!--<li><a href="#/">Home</a></li>-->
+        <!--<li><a href="#/about">About</a></li>-->
+        <!--<li><a href="#">Prices</a></li>-->
+        <!--<li><a href="#">Blog</a></li>-->
+        <!--<li><a href="#/contact">Contact</a></li>-->
+      <!--</ul>-->
+      <!--<ul class="right hide-on-med-and-down" id="med-and-down-menu2">-->
+        <!--<li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li>&lt;!&ndash; -->
+         <!--&ndash;&gt;<li ng-show="sessionProgress" class="fade right-align" ng-class="{in:sessionProgress}" style="width: 200px;"><a class="dropdown-button" href="javascript:void(0);" data-activates='userDropdown' data-beloworigin="true" data-gutter="0"><span class="light white-text">{{ currentSession.name }}</span></a></li><i class="material-icons fade" ng-class="{in:sessionProgress}" ng-show="sessionProgress">perm_identity</i>-->
+      <!--</ul>-->
+      <!--&lt;!&ndash; Dropdown Structure &ndash;&gt;-->
+      <!--<ul id='userDropdown' class='dropdown-content'>-->
+          <!--<li><a href="#/uploadfile">Upload Files</a></li>-->
+          <!--<li><a href="#/inbox">Inbox</a></li>-->
+          <!--<li><a href="javascript:void(0);">Settings</a></li>-->
+          <!--<li ng-show="sessionAdmin"><a href="#/usersboards" class="red-text">Users Dashboard</a>-->
+          <!--<li ng-show="sessionAdmin"><a href="#" class="red-text">File Manager</a>-->
+          <!--<li><a href="/users/logout">Log Out</a></li>-->
+      <!--</ul>-->
+      <!--<ul id="nav-mobile" class="side-nav blue-grey darken-1">-->
+        <!--<li><a href="/#">Home</a></li>-->
+        <!--<li><a href="#/about">About</a></li>-->
+        <!--<li><a href="#">Prices</a></li>-->
+        <!--<li><a href="#">Blog</a></li>-->
+        <!--<li><a href="#/contact">Contact</a></li>-->
+        <!--<div class="divider"></div>-->
+        <!--<li ng-hide="sessionProgress" class="fade" ng-class="{in:!sessionProgress}"><a class="waves-effect waves-purple btn blue-grey lighten-2 modal-trigger" href="#modal1">Sign Up / Log In</a></li>&lt;!&ndash; -->
+         <!--&ndash;&gt;<li ng-show="sessionProgress" class="fade" ng-class="{in:sessionProgress}"><a><span class="light white-text">{{ currentSession.name }} </span></a></li>-->
+         <!--<ul ng-show="sessionProgress">-->
+          <!--<div class="divider"></div>-->
+          <!--<li><a href="#/uploadfile">Upload Files</a></li>-->
+          <!--<li><a href="#/inbox">Inbox</a></li>-->
+          <!--<li><a href="javascript:void(0);">Settings</a></li>-->
+          <!--<li ng-show="sessionAdmin"><a href="#/usersboards" class="red-text">Users Dashboard</a>-->
+          <!--<li ng-show="sessionAdmin"><a href="#" class="red-text">File Manager</a>-->
+          <!--<li><a href="/users/logout">Log Out</a></li>-->
+        <!--</ul>-->
+      <!--</ul>-->
+      <!---->
+      <!--<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>-->
+    <!--</div>-->
+  <!--</nav>-->
+  <!--&lt;!&ndash; LOGIN MODAL &ndash;&gt;-->
+  <!--<div id="modal1" class="modal" ng-controller="loginController">-->
+    <!--<div class="modal-content">-->
+      <!--<h4>Login</h4>-->
+          <!--<form id="loginForm" class="col s12">-->
+            <!--<div class="container">-->
+              <!--<div class="row">-->
+                <!--<div class="input-field col s12">-->
+                  <!--<input ng-model="email" type="email" class="validate" required>-->
+                  <!--<label for="email">Email</label>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="row">-->
+                <!--<div class="input-field col s12">-->
+                  <!--<input ng-model="password" type="password" class="validate" required>-->
+                  <!--<label for="password">Password</label>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="row">-->
+                <!--<div class="col s12 m6" style="padding-top: 5px;">-->
+                  <!--<button class="btn waves-effect waves-light blue-grey" type="button" ng-click="loginUser()">Log In<i class="material-icons right">input</i></button>-->
+                <!--</div>-->
+                <!--<div class="col s12 m6" style="padding-top: 5px;">-->
+                  <!--<a class="btn waves-effect waves-green btn-flat modal-trigger modal-action modal-close" href="#modal2">Sign Up!</a>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<h6><a href="#">forgot your password?</a></h6>-->
+            <!--</div>-->
+          <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--&lt;!&ndash; REGISTER MODAL &ndash;&gt;-->
+  <!--<div id="modal2" class="modal" ng-controller="registerController">-->
+    <!--<div class="modal-content">-->
+      <!--<h4>Register</h4>-->
+        <!--<form id="registerForm" class="col s12">-->
+          <!--<div class="container">-->
+            <!--<div class="row">-->
+              <!--<div class="input-field col s12 m6">-->
+                <!--<input id="first_name" ng-model="first_name" type="text" minlength="2" class="validate" required>-->
+                <!--<label for="first_name">First Name</label>-->
+              <!--</div>-->
+              <!--<div class="input-field col s12 m6">-->
+                <!--<input id="last_name" ng-model="last_name" type="text" minlength="2" class="validate" required>-->
+                <!--<label for="last_name">Last Name</label>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+              <!--<div class="input-field col s12">-->
+                <!--<input id="email" ng-model="email" type="email" class="validate" required>-->
+                <!--<label for="email">Email</label>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+            <!--<div class="input-field col s12 m6">-->
+              <!--<input id="password" ng-model="password" type="password" class="validate" minlength="6" required>-->
+              <!--<label for="password">Password</label>-->
+            <!--</div>-->
+            <!--<div class="input-field col s12 m6">-->
+              <!--<input id="password_confirm" ng-model="password_confirm" type="password" class="validate" minlength="6" required>-->
+              <!--<label for="password_confirm">Password Confirm</label>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="row center">-->
+            <!--<div class="col s12">-->
+              <!--<button class="btn waves-effect waves-light blue-grey right" type="button" ng-click="registerUser()">Submit<i class="material-icons right">input</i></button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
 
   <!--Angular View-->
   <div ng-view=""></div>

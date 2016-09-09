@@ -34,8 +34,16 @@ TopApp.config( function ($routeProvider) {
 			redirectTo: "/"
 		});
 })
-
-
+// -----------------------------------------------------------------
+// DIRECTIVES
+TopApp.directive('navBar', function() {
+	var directive = {
+		restrict: 'E',
+		scope: false,
+		templateUrl: 'partials/navbar.html'
+	};
+	return directive;
+})
 
 // -----------------------------------------------------------------
 // FACTORIES
