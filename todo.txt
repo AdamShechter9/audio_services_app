@@ -1,0 +1,28 @@
+TODO
+
+- Settings: create a settings page.
+	* email notification when messaged 	* ability to change email address in database
+
+- Multiple File Upload:  add a multiple file upload feature with progress indicator.
+
+- File Manager: create a place where admin can see all uploads?
+
+- add secure HTTPS cookie option
+
+- Emails: since mailgun needs a domain registered, I can’t implement these features at the moment.
+	* receive email notification when getting a message
+	* receive confirmation email to verify email address
+	* ability to turn notifications on/off in settings
+	* admin receives an email when contact form is filled out.
+
+- Prices:  create HTML page
+- Blog: create web application for blog function
+
+- Create a way to pay on line via PayPal
+
+
+
+BEFORE PRODUCTION/DEPLOYMENT CHECKLIST
+- Remove “LIVERELOAD” code
+- comment out all console.log
+- run HTML CHECK on all pages. see if there’s anything major.
