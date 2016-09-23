@@ -8,20 +8,25 @@
         <div class="row center">
           <!-- uploadFileController Section -->
           <form ng-controller="uploadFileController">
-            <div class="container indigo lighten-5" style="padding: 15px; border-radius: 9px;height: 10.5em;">
-              <div class="file-field input-field">
-                <div class="btn">
-                  <span>File</span>
-                  <input type="file">
+              <div class="container indigo lighten-5" style="padding: 15px; border-radius: 9px;height: 10.5em;">
+                <h6 id="uploadText" class="black-text">0% done</h6>
+                <div class="progress" id="uploadProgress">
+                    <div id="uploadProgressBar" class="determinate" style="width: 0%"></div>
                 </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
+                  <span class="center black-text" id="fileMessage">Select file(s) to upload</span>
+
+                  <div class="file-field input-field">
+                    <div class="file-path-wrapper">
+                        <input class="file-path" id="upload-input" type="file" name="uploads[]" multiple="multiple">
+                    </div>
+                  <div class="btn" id="fileUploadBtn">
+                      <span>Files</span>
+                  </div>
               </div>
-              <button class="btn waves-effect waves-light right" type="button" ng-click="">
+              <button id="sendUploadBtn" class="btn waves-effect waves-light right" type="button" ng-click="uploadBtnClick()">
                   Send<i class="material-icons right">input</i>
               </button>
-            </div>        
+            </div>
           </form>
           
         </div>

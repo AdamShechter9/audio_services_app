@@ -214,6 +214,60 @@ TopApp.factory('messageFactory', function ($http) {
 		})
 	};
 
+	factory.uploadFiles = function (files, callback) {
+
+        // One or more files selected, process the file upload
+        //console.log("in uploadFiles messagefactory");
+        var formData1 = new FormData();
+
+        for (var i = 0; i < files.length; i += 1) {
+            var file = files[i];
+            // console.log(file);
+            // add the files to formData object for the data payload
+            formData1.append('uploads', file, file.name);
+        }
+        //console.log("messageFactory->uploadFiles ajax call");
+        $.ajax({
+            url: '/uploads',
+            type: 'POST',
+            data: formData1,
+            processData: false,
+            contentType: false,
+            success: function(data){
+                //console.log('upload successful!');
+                callback();
+            },
+            xhr: function() {
+                // create an XMLHttpRequest
+                var xhr = new XMLHttpRequest();
+
+                // listen to the 'progress' event
+                xhr.upload.addEventListener('progress', function(evt) {
+
+                    if (evt.lengthComputable) {
+                        // calculate the percentage of upload completed
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+
+                        // update the Bootstrap progress bar with the new percentage
+                        $('#uploadText').text(percentComplete + '% done');
+                        $('#uploadProgressBar').width(percentComplete + '%');
+
+                        // once the upload reaches 100%, set the progress bar text to done
+                        if (percentComplete === 100) {
+                            $('#uploadText').html('All Done! Message has been sent to admin');
+                        }
+
+                    }
+
+                }, false);
+
+                return xhr;
+            }
+        });
+
+    };
+
 	return factory;
 });
 
@@ -286,7 +340,6 @@ TopApp.controller('navbarController', function ($scope, userFactory) {
 	$scope.sessionProgress = false;
 	$scope.sessionAdmin = false;
 
-
 	var checkSession = function () {
 		userFactory.sessionState( function (data) {
 			$scope.currentSession = data;
@@ -343,7 +396,7 @@ TopApp.controller('contactFormController', function ($scope, messageFactory) {
 });
 // -----------------------------------------------------------------
 // uploadFileController
-TopApp.controller('uploadFileController', function ($scope, $location, userFactory) {
+TopApp.controller('uploadFileController', function ($scope, $location, userFactory, messageFactory) {
 	//console.log("uploadFileController");
 	$scope.sessionProgress = false;
 
@@ -365,6 +418,36 @@ TopApp.controller('uploadFileController', function ($scope, $location, userFacto
 			$scope.sessionProgress = true;
 		})
 	};
+
+	$scope.uploadBtnClick = function () {
+        var files = $('#upload-input').get(0).files;
+        if (files.length > 0){
+            // One or more files selected, process the file upload
+            $('#uploadText').css('visibility', 'visible');
+            $('#uploadProgress').css('visibility', 'visible');
+            //console.log("making messageFactory call");
+            messageFactory.uploadFiles(files, function () {
+                //console.log("files uploaded successfully");
+                $('#uploadText').css('visibility', 'visible');
+                $('#uploadProgress').css('visibility', 'visible');
+                $('#fileUploadBtn').css('visibility', 'hidden');
+                $('#sendUploadBtn').css('visibility', 'hidden');
+                $('#fileMessage').css('visibility', 'hidden');
+
+            });
+        }
+	};
+
+    $('#upload-input').on('change', function(){
+        var files = $(this).get(0).files;
+        if (files.length > 0){
+            $('#fileMessage').html(files.length + " file(s) are selected. Press SEND to upload files.");
+        } else {
+            $('#fileMessage').html("no files selected.");
+        }
+
+    });
+
 	checkSession();
 });
 // -----------------------------------------------------------------

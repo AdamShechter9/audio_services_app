@@ -99,7 +99,7 @@ module.exports = function (app) {
 		console.log("sending message for user", req.session.userid);
 		MessagesController.createMessage(req, res);
 	});
-	app.post('/messages/upload', function (req, res) {
+	app.post('/uploads', function (req, res) {
 		// upload a file 
 		console.log("Uploading file for user", req.session.userid);
 		MessagesController.uploadFile(req, res);

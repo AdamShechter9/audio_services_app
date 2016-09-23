@@ -38,6 +38,7 @@ module.exports = {
 		newUser.last_name= req.body.last_name;
 		newUser.email = req.body.email;
 		newUser.userid = uniqueIdGen.uniqueIdGenerate(8, 'aA#');
+
 		newUser.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8));
 		newUser.save(function (err) {
 		 	if (err) {
@@ -48,7 +49,7 @@ module.exports = {
 					name: newUser.first_name + " " + newUser.last_name,
 					userid: newUser.userid,
 					email: newUser.email
-				}
+				};
 				req.session.name = sessionuser.name;
 				req.session.userid = sessionuser.userid;
 				req.session.email = sessionuser.email;
@@ -73,7 +74,7 @@ module.exports = {
 							name: user.first_name + " " + user.last_name,
 							userid: user.userid,
 							email: user.email
-						}
+						};
 						req.session.name = sessionuser.name;
 						req.session.userid = sessionuser.userid;
 						req.session.email = sessionuser.email;
