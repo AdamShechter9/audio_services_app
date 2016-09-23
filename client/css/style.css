@@ -1,0 +1,117 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+
+ * Made By MaterializeCSS.com
+ */
+.angular-with-newlines {
+  white-space: pre; }
+
+nav ul a,
+nav .brand-logo {
+  color: #444; }
+
+body {
+  background-color: #cfd8dc; }
+
+p {
+  line-height: 2rem; }
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease-in;
+  -moz-transition: opacity 0.25s ease-in;
+  -o-transition: opacity 0.25s ease-in;
+  -ms-transition: opacity 0.25s ease-in;
+  transition: opacity 0.25s ease-in; }
+
+.fade.in {
+  opacity: 1; }
+
+#top-nav #logo-img {
+  height: 1.94em;
+  width: auto;
+  border-radius: 0.3em;
+  background-color: rgba(255, 255, 255, 0.4);
+  vertical-align: top;
+  box-shadow: 7px 4px 4px grey; }
+#top-nav #med-and-down-menu1 li a {
+  color: #eceff1; }
+  #top-nav #med-and-down-menu1 li a:hover {
+    color: #ab47bc; }
+#top-nav #nav-mobile li a {
+  color: #eceff1; }
+  #top-nav #nav-mobile li a:hover {
+    color: #ab47bc; }
+
+#wrapper_inbox {
+  width: 100%;
+  background-color: #e8eaf6;
+  height: 550px;
+  border-radius: 1em;
+  padding-top: 1.5em; }
+
+#inbox_space {
+  width: 97%;
+  height: 450px;
+  background-color: white;
+  padding: 0.5em 1em;
+  overflow: scroll;
+  border-radius: 1em; }
+  #inbox_space #messagetable {
+    line-height: 1.2; }
+
+#uploadText, #uploadProgress {
+  visibility: hidden; }
+
+#index-banner .section {
+  position: absolute;
+  top: 40%; }
+#index-banner #jumboheader1 {
+  text-shadow: 2px 5px 7px gray;
+  font-family: 'Fascinate Inline', cursive; }
+
+#jumboheader2 {
+  text-shadow: 2px 5px 7px gray; }
+
+#quotes-list-stagger li {
+  opacity: 0;
+  margin-bottom: 2.5em; }
+
+#quotes-list-stagger2 li {
+  opacity: 0;
+  margin-bottom: 2.5em; }
+
+.button-collapse {
+  color: #26a69a; }
+
+.parallax-container {
+  min-height: 420px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255, 255, 255, 0.9); }
+  .parallax-container .section {
+    width: 100%; }
+
+@media only screen and (max-width: 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%; }
+
+  #index-banner .section {
+    top: 10%; } }
+@media only screen and (max-width: 600px) {
+  #index-banner .section {
+    top: 10%; } }
+.icon-block {
+  padding: 0 15px; }
+
+.icon-block .material-icons {
+  font-size: inherit; }
+
+footer.page-footer {
+  margin: 0; }
+
+/*# sourceMappingURL=style.css.map */
