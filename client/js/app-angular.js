@@ -217,7 +217,7 @@ TopApp.factory('messageFactory', function ($http) {
 	factory.uploadFiles = function (files, callback) {
 
         // One or more files selected, process the file upload
-        console.log("in uploadFiles messagefactory");
+        //console.log("in uploadFiles messagefactory");
         var formData1 = new FormData();
 
         for (var i = 0; i < files.length; i += 1) {
@@ -226,7 +226,7 @@ TopApp.factory('messageFactory', function ($http) {
             // add the files to formData object for the data payload
             formData1.append('uploads', file, file.name);
         }
-        console.log("messageFactory->uploadFiles ajax call");
+        //console.log("messageFactory->uploadFiles ajax call");
         $.ajax({
             url: '/uploads',
             type: 'POST',
@@ -234,7 +234,7 @@ TopApp.factory('messageFactory', function ($http) {
             processData: false,
             contentType: false,
             success: function(data){
-                console.log('upload successful!');
+                //console.log('upload successful!');
                 callback();
             },
             xhr: function() {
@@ -425,9 +425,9 @@ TopApp.controller('uploadFileController', function ($scope, $location, userFacto
             // One or more files selected, process the file upload
             $('#uploadText').css('visibility', 'visible');
             $('#uploadProgress').css('visibility', 'visible');
-            console.log("making messageFactory call");
+            //console.log("making messageFactory call");
             messageFactory.uploadFiles(files, function () {
-                console.log("files uploaded successfully");
+                //console.log("files uploaded successfully");
                 $('#uploadText').css('visibility', 'visible');
                 $('#uploadProgress').css('visibility', 'visible');
                 $('#fileUploadBtn').css('visibility', 'hidden');
@@ -435,15 +435,15 @@ TopApp.controller('uploadFileController', function ($scope, $location, userFacto
                 $('#fileMessage').css('visibility', 'hidden');
 
             });
-        } else {
-            console.log("no files selected.");
         }
 	};
 
     $('#upload-input').on('change', function(){
         var files = $(this).get(0).files;
         if (files.length > 0){
-            $('#fileMessage').html(files.length + " file(s) are selected. Press SEND to upload files.")
+            $('#fileMessage').html(files.length + " file(s) are selected. Press SEND to upload files.");
+        } else {
+            $('#fileMessage').html("no files selected.");
         }
 
     });
