@@ -62,6 +62,9 @@ p {
   #inbox_space #messagetable {
     line-height: 1.2; }
 
+#uploadText, #uploadProgress {
+  visibility: hidden; }
+
 #index-banner .section {
   position: absolute;
   top: 40%; }

@@ -3,6 +3,8 @@ var path = require('path');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
+var formidable = require('formidable');
+var fs = require('fs');
 
 var app = express();
 

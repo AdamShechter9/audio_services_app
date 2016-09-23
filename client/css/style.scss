@@ -97,6 +97,12 @@ p {
   }
 }
 
+#uploadText, #uploadProgress {
+  visibility: hidden;
+}
+
+
+
 #index-banner {
   .section {
     position: absolute;
