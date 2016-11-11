@@ -6,6 +6,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var Message = mongoose.model('Message');
+var mailgun = require('mailgun-js')({apiKey: "key-731e882fcc6208dd54aa8fa7007844ad", domain: "mg.warp9audio.co"});
 
 
 module.exports = {
@@ -60,6 +61,8 @@ module.exports = {
 		})
 	},
 	createMessage: function (req, res) {
+		var contactForm = false;
+
 		console.log("create a new message from", req.session.name);
 		// console.log(req.body);
 
@@ -72,12 +75,42 @@ module.exports = {
 		newMessage.userid = req.body.userid;
 		newMessage.to = req.body.to;
 
+		if (newMessage.userid === "contactForm") {
+			contactForm = true;
+		}
+
+		console.log("newmessage", newMessage);
 		newMessage.save(function (err) {
 			console.log("saving message");
 		});
-
+		if (newMessage.to == ADMINTITLE) {
+			newMessage.toEmail = ADMIN
+		} else if (newMessage.name === ADMINTITLE) {
+			newMessage.toEmail = newMessage.email
+			newMessage.email = ADMIN
+		}
+		var data = {
+			from: newMessage.name+" <"+newMessage.email+">",
+			to: newMessage.to+" <"+newMessage.toEmail+">",
+			subject: "[www.warp9audio.co] "+newMessage.title,
+			text: newMessage.text+"\n\n\nMessage sent from [www.warp9audio.co] message system"
+		};
+		var data2 = {
+			from: ADMINTITLE+" <"+ADMIN+">",
+			to: newMessage.name+" <"+newMessage.email+">",
+			subject: "[www.warp9audio.co] "+"CONTACT FORM MESSAGE SENT",
+			text: "Thank you for contact warp9 audio services.\nWe'll do out best to get back to you as soon as we can.\n\n\nMessage sent from [www.warp9audio.co] message system"
+		}
+		console.log("sending email to ", newMessage.email, " from ",newMessage.name);
+		console.log(data);
+		mailgun.messages().send(data, function (error, body) {
+			console.log(body);
+		});
+		mailgun.messages().send(data2, function (error, body) {
+			console.log(body);
+		});
 		res.json("success");
-		
+
 	},
 	uploadFile: function (req, res) {
 		console.log("upload a file from ", req.session.name);
@@ -119,6 +152,17 @@ module.exports = {
             newMessage.save(function (err) {
                 console.log("saving message");
             });
+						var data = {
+							from: newMessage.name+" <"+newMessage.email+">",
+							to: newMessage.to,
+							subject: newMessage.title,
+							text: newMessage.text
+						};
+						console.log("sending email to ", newMessage.to, " from ",newMessage.email);
+						console.log(data);
+						mailgun.messages().send(data, function (error, body) {
+							console.log(body);
+						});
             res.end('success');
         });
         // parse the incoming request containing the form data
