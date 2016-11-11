@@ -16,7 +16,8 @@
 
 </head>
 <body ng-app="TopApp">
-    <nav-bar></nav-bar>
+  <!-- nav bar -->
+  <nav-bar></nav-bar>
 
   <!--Angular View-->
   <div ng-view=""></div>
@@ -25,7 +26,7 @@
     <!--Footer-->
   <footer class="page-footer blue-grey darken-1">
       <div class="container">
-          <h6 class="header white-text center-align no-pad-bot">Website design by ChromaWave Design LLC</h6>
+          <h6 class="header white-text center-align no-pad-bot">Website design by Adam Shechter</h6>
       </div>
     <div class="footer-copyright blue-grey darken-1">
       <div class="container">
@@ -37,8 +38,10 @@
     </div>
   </footer>
 
+
+
+  </script>
   <!-- JavaScript for: jQuery, angular, materialize, and angular-materialize. All of which are needed. -->
-    <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
@@ -48,7 +51,19 @@
 
     <!-- Angular app -->
     <script type="text/javascript" src="js/app-angular.js"></script>
-    <!-- development : REMOVE BEFORE PRODUCTION -->
-    <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
+
+    <!-- Angular Factories -->
+    <script type="text/javascript" src="factories/userfactory.js"></script>
+    <script type="text/javascript" src="factories/messagefactory.js"></script>
+    </script>
+    <!-- Angular Controllers -->
+    <script type="text/javascript" src="controllers/registercontroller.js"></script>
+    <script type="text/javascript" src="controllers/logincontroller.js"></script>
+    <script type="text/javascript" src="controllers/navbarcontroller.js"></script>
+    <script type="text/javascript" src="controllers/contactformcontroller.js"></script>
+    <script type="text/javascript" src="controllers/messagecontroller.js"></script>
+    <script type="text/javascript" src="controllers/settingscontroller.js"></script>
+    <script type="text/javascript" src="controllers/userscontroller.js"></script>
+    <script type="text/javascript" src="controllers/uploadfilecontroller.js"></script>
   </body>
 </html>
