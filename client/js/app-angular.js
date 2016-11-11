@@ -21,6 +21,9 @@ TopApp.config( function ($routeProvider) {
 		.when('/contact', {
 			templateUrl: "/partials/contact.html"
 		})
+		.when('/prices', {
+			templateUrl: "/partials/prices.html"
+		})
 		.when('/uploadfile', {
 			templateUrl: "/partials/uploadfile.html"
 		})

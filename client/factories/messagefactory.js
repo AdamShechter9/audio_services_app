@@ -38,7 +38,6 @@ TopApp.factory('messageFactory', function ($http) {
 			}
 		})
 	};
-
 	factory.getAllMessages = function (callback) {
 		//console.log("messageFactory->getMessages");
 		$http.get('/messages/admin').then(function(data) {

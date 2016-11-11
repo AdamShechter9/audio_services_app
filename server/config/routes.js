@@ -1,3 +1,4 @@
+"use strict";
 var UsersController = require('../controllers/users.js');
 var MessagesController = require('../controllers/messages.js');
 var ADMIN = "warp9mixmaster@gmail.com";
@@ -12,7 +13,13 @@ module.exports = function (app) {
 	app.post('/users/register', function (req, res) {
 		// register a new user to database
 		console.log("register->sent over", req.body);
-		UsersController.createUser(req, res);  
+		UsersController.createUser(req, res);
+	});
+	app.get('/users/confirm', function (req, res) {
+		// confirms the users email and activates the account
+		console.log("email: ", req.query.email);
+		console.log("userid: ", req.query.userid);
+		UsersController.confirmUserEmail(req, res);
 	});
 	app.post('/users/login', function (req, res) {
 		// login user to database
@@ -47,7 +54,7 @@ module.exports = function (app) {
 		}
 	});
 	app.get('/users/admin', function (req, res) {
-		// return current user name.  returns undefined if no session.
+		// return current users.  returns undefined if no session.
 		console.log("Admin call for user list");
 		if (req.session.email != ADMIN) {
 			res.json({error: "access denied"});
@@ -56,7 +63,7 @@ module.exports = function (app) {
 		}
 	});
 	app.post('/users/admin/remove', function (req, res) {
-		// return current user name.  returns undefined if no session.
+		// removes current user name.  returns undefined if no session.
 		console.log("Admin call to erase user");
 		if (req.session.email != ADMIN) {
 			res.json({error: "access denied"});
@@ -72,7 +79,7 @@ module.exports = function (app) {
 		res.end();
 	});
 	app.post('/contact', function (req, res) {
-		// contact form send 
+		// contact form send
 		console.log("contact->sent over", req.body);
 		res.end();
 	});
@@ -100,8 +107,23 @@ module.exports = function (app) {
 		MessagesController.createMessage(req, res);
 	});
 	app.post('/uploads', function (req, res) {
-		// upload a file 
+		// upload a file
 		console.log("Uploading file for user", req.session.userid);
 		MessagesController.uploadFile(req, res);
-	})
+	});
+	// app.get('/test/test1', function (req,res) {
+	// 	console.log("sending test email");
+	// 	var data = {
+	// 	  from: 'Warp9 Audio <warp9audio@mg.warp9audio.co>',
+	// 	  to: 'warp9mixmaster@gmail.com',
+	// 	  subject: 'Hello',
+	// 	  text: 'Testing some Mailgun awesomness!'
+	// 	};
+	//
+	// 	mailgun.messages().send(data, function (error, body) {
+	// 	  console.log(body);
+	// 	});
+	// 	res.send("sent email.")
+	// })
+
 };

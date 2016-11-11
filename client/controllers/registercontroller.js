@@ -25,7 +25,7 @@ TopApp.controller('registerController', function ($scope, userFactory) {
 					//console.log("successfully created user!");
 					// reload page?
 					$('#modal2').closeModal();
-					location.reload();
+					Materialize.toast('Please confirm your email next.', 6000);
 				} else {
 					Materialize.toast('User exists!', 6000);
 				}

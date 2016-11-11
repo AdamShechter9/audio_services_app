@@ -60,7 +60,6 @@ TopApp.factory('userFactory', function ($http) {
 					if (data.data.hasOwnProperty('error')) {
 						callback(data.data.error);
 					} else {
-						sessionUser = data.data.sessionuser;
 						callback("success");
 					}
 				})
