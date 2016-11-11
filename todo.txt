@@ -1,10 +1,11 @@
 TODO
 
 - add gulp routine!
-- further modularize?
--
+- further modularize code>??
+- clean up.  make faster.  w3 check. yahoo check.
 
 - Blog: create web application for blog function
+  (google?  disqus?)
 
 FILE MANAGER
     * Admin only feature
