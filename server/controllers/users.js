@@ -48,7 +48,7 @@ module.exports = {
 				res.json({error: "error creating user"});
 			} else {
 				//send email confirmation
-				var myUrl = "http://www.warp9audio.com/users/confirm?email="+encodeURI(newUser.email)+"&userid="+encodeURI(newUser.userid);
+				var myUrl = "http://www.warp9audio.co/users/confirm?email="+encodeURI(newUser.email)+"&userid="+encodeURI(newUser.userid);
 				var data = {
 				  from: 'Warp9 Audio <warp9audio@mg.warp9audio.co>',
 				  to: newUser.email,
