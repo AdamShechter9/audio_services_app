@@ -6,7 +6,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var Message = mongoose.model('Message');
-var mailgun = require('mailgun-js')({apiKey: "key-731e882fcc6208dd54aa8fa7007844ad", domain: "mg.warp9audio.co"});
+var mailgun = require('mailgun-js')({apiKey: "***********************", domain: "*****************"});
 
 
 module.exports = {
